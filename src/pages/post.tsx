@@ -119,7 +119,7 @@ function Post() {
   return (
     <div className="flex flex-col h-screen ">
       <main
-        className="relative w-full h-[80px] flex-shrink-0 mt-[78.5px]"
+        className="relative w-full h-[80px] flex-shrink-0 mt-[68px]"
         onMouseDown={handleDragStart}
         onMouseUp={handleDragEnd}
         onMouseLeave={handleDragEnd}
