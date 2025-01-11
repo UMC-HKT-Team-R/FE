@@ -93,9 +93,7 @@ function Post() {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? banners.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? banners.length - 1 : prevIndex - 1));
   };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
@@ -106,8 +104,7 @@ function Post() {
   const handleDragEnd = (e: React.MouseEvent | React.TouchEvent) => {
     if (startX === null) return;
 
-    const clientX =
-      "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientX = "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
     const diff = startX - clientX;
 
     if (diff > 50) {
@@ -120,9 +117,9 @@ function Post() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen ">
       <main
-        className="relative w-full h-[80px] overflow-hidden flex-shrink-0"
+        className="relative w-full h-[80px] flex-shrink-0 mt-[78.5px]"
         onMouseDown={handleDragStart}
         onMouseUp={handleDragEnd}
         onMouseLeave={handleDragEnd}
@@ -174,14 +171,14 @@ function Post() {
         </div>
       </main>
 
-      <div className="flex-1 overflow-y-auto px-4 mt-2 mb-[80px]">
+      <div className="flex-1 overflow-y-auto px-4 mt-[20px] mb-[80px]">
         {posts.map((post, index) => (
           <div
             key={index}
-            className="mb-6 cursor-pointer"
+            className="flex flex-col w-full mb-6 cursor-pointer"
             onClick={() => handlePostClick(post.postId)}
           >
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-center">
               <div className="flex-1">
                 <h3 className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px] mb-[4px]">
                   {post.title}
@@ -214,14 +211,20 @@ function Post() {
                   </span>
                 </div>
               </div>
+
+              {/* 이미지 섹션 */}
               {post.image && (
-                <img
-                  src={post.image}
-                  alt="게시글 이미지"
-                  className="w-[80px] h-[80px] rounded-[6px] flex-shrink-0 ml-4"
-                />
+                <div className="ml-4 flex-shrink-0">
+                  <img
+                    src={post.image}
+                    alt="게시글 이미지"
+                    className="w-[80px] h-[80px] object-cover rounded-[6px]"
+                  />
+                </div>
               )}
             </div>
+
+            {/* 구분선 */}
             {index < posts.length - 1 && (
               <div className="w-full h-0 border-t border-[#F3F4F8] mt-4"></div>
             )}
