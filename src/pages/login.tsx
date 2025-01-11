@@ -1,12 +1,17 @@
 import kakaologin from "../assets/kakaoicon.svg";
 import mainlogo from "../assets/mainlogo.png";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  // const handleKakaoLogin = () => {
-  // };
+  const handleKakaoLogin = () => {
+    // 카카오 로그인 로직 추가
+    login();
+    navigate("/");
+  };
 
   const handleBrowseWithoutLogin = () => {
     navigate("/");
@@ -26,7 +31,10 @@ function Login() {
       </div>
 
       <div className="mt-[172px] w-full space-y-4">
-        <button className="flex items-center justify-center w-full py-[12px] bg-[#FEE500] rounded-[8px]  hover:bg-yellow2">
+        <button
+          className="flex items-center justify-center w-full py-[12px] bg-[#FEE500] rounded-[8px]  hover:bg-yellow2"
+          onClick={handleKakaoLogin}
+        >
           <span className="mr-[8px]">
             <img
               src={kakaologin}
