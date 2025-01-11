@@ -20,22 +20,6 @@ function PostDetail() {
   const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
   const [commentBody, setCommentBody] = useState<string>("");
 
-  const handleCommentSubmit = async () => {
-    if (!commentBody.trim()) {
-      alert("댓글을 입력해주세요.");
-      return;
-    }
-
-    try {
-      const response = await createComment(Number(postId), { body: commentBody });
-      console.log("댓글 작성 성공:", response);
-      alert(response.message);
-      setCommentBody("");
-    } catch (error) {
-      alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
-
   const [commentList, setCommentList] = useState<
     {
       id: number;
@@ -220,9 +204,9 @@ function PostDetail() {
 
         <div className="w-full h-[12px] bg-[#F3F4F8] mb-5"></div>
 
-        {comments.length > 0 ? (
+        {commentList.length > 0 ? (
           <div className="flex flex-col gap-5">
-            {comments.map((comment) => (
+            {commentList.map((comment) => (
               <div key={comment.date} className="flex flex-col gap-2 border-b border-grey100 pb-5">
                 <div className="flex justify-between items-center">
                   <div className="flex gap-2 items-center">
@@ -231,7 +215,7 @@ function PostDetail() {
                       {comment.username}
                     </span>
                   </div>
-                  <button onClick={() => handleDeleteComment(comment.id)}>
+                  <button onClick={() => deleteComment(comment.id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
