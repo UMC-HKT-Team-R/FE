@@ -1,26 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import sample from "../assets/banner1.png";
 import logo from "../assets/profile.png";
+import profile1 from "../assets/mainlogo.png";
+import profile2 from "../assets/profile2.png";
+import profile3 from "../assets/profile3.png";
+import profile4 from "../assets/profile4.png";
+import profile5 from "../assets/profile.png";
 import { deletePost } from "@/services/post";
 import { createComment, deleteComment } from "@/services/comment";
-
-const comments = [
-  {
-    id: 1,
-    username: "낭만고양이",
-    profile: "/path/to/logo1.png",
-    content: "점심 깔끔한 거 먹었으면 야식은 좀 무겁게 먹어야죠 라면 추천드립니다 ㅋㅋㅋㅋㅋ",
-    date: "24. 12. 31. 12:13",
-  },
-  {
-    id: 2,
-    username: "카리나 사랑해",
-    profile: "/path/to/logo2.png",
-    content: "야식 드시지 마세요 몸에 안 좋아요",
-    date: "24. 12. 31. 12:13",
-  },
-];
+import { getMypageData } from "@/services/my";
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -47,10 +36,91 @@ function PostDetail() {
     }
   };
 
-  const handleDeleteComment = (id: number) => {
-    setSelectedCommentId(id);
-    setIsModalOpen(true);
+  const [commentList, setCommentList] = useState<
+    {
+      id: number;
+      username: string;
+      type: string;
+      profile: string;
+      content: string;
+      date: string;
+    }[]
+  >([]);
+  const [userNickname, setUserNickname] = useState<string>("");
+  const [userType, setUserType] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<string>(profile5);
+
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const adjustHeight = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height = `${Math.min(textAreaRef.current.scrollHeight, 100)}px`;
+    }
   };
+
+  const getGourmetInfo = (categories: number): { type: string; image: string } => {
+    if (categories <= 10) return { type: "절제 미식가", image: profile1 };
+    if (categories <= 30) return { type: "노력하는 미식가", image: profile2 };
+    if (categories <= 50) return { type: "갈대같은 미식가", image: profile3 };
+    if (categories <= 80) return { type: "충동적인 미식가", image: profile4 };
+    return { type: "자극 중독 미식가", image: profile5 };
+  };
+
+  useEffect(() => {
+    adjustHeight();
+  }, [commentBody]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await getMypageData();
+        const { nickname, categories } = response.result;
+        const { type, image } = getGourmetInfo(categories);
+        setUserNickname(nickname);
+        setUserType(type);
+        setProfileImage(image);
+      } catch (error) {
+        console.error("사용자 데이터 가져오기 실패:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  const handleCommentSubmit = async () => {
+    if (!commentBody.trim()) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await createComment(Number(postId), { content: commentBody });
+
+      if (response?.result?.commentId) {
+        setCommentList((prev) => [
+          ...prev,
+          {
+            id: response.result.commentId,
+            username: userNickname || "익명",
+            type: userType,
+            profile: profileImage,
+            content: commentBody,
+            date: new Date().toLocaleString("ko-KR", { dateStyle: "short", timeStyle: "short" }),
+          },
+        ]);
+        setCommentBody("");
+      } else {
+        alert("댓글 등록에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  // const handleDeleteComment = (id: number) => {
+  //   setSelectedCommentId(id);
+  //   setIsModalOpen(true);
+  // };
 
   const handlePostDelete = () => {
     setIsPostModalOpen(true);
@@ -66,6 +136,8 @@ function PostDetail() {
       const response = await deleteComment(selectedCommentId);
       console.log("댓글 삭제 성공:", response);
       alert(response.message);
+
+      setCommentList((prev) => prev.filter((comment) => comment.id !== selectedCommentId));
       setIsModalOpen(false);
       setSelectedCommentId(null);
     } catch (error) {

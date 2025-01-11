@@ -1,13 +1,13 @@
 import { api } from "./api";
 
 interface CreateCommentRequest {
-  body: string;
+  content: string;
 }
 
 interface CreateCommentResponse {
   status: number;
   message: string;
-  data: {
+  result: {
     commentId: number;
   };
 }
@@ -22,15 +22,11 @@ export const createComment = async (
   data: CreateCommentRequest
 ): Promise<CreateCommentResponse> => {
   try {
-    const response = await api.post<CreateCommentResponse>(
-      `/api/post/${postId}/comment`,
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await api.post<CreateCommentResponse>(`/api/post/${postId}/comment`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Failed to create comment:", error);
@@ -40,7 +36,7 @@ export const createComment = async (
 
 export const deleteComment = async (commentId: number): Promise<DeleteCommentResponse> => {
   try {
-    const response = await api.delete<DeleteCommentResponse>(`/api/post/${commentId}`);
+    const response = await api.delete<DeleteCommentResponse>(`/api/post/comment/${commentId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to delete comment:", error);

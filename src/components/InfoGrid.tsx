@@ -1,55 +1,76 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import R4 from "../assets/Rectangle 4.svg";
+import R5 from "../assets/Rectangle 5.svg";
+import R6 from "../assets/Rectangle 6.svg";
+import R7 from "../assets/Rectangle 7.svg";
 
 interface InfoItem {
-  postId: number;
+  id: number;
   title: string;
   date: string;
-  image_url: string;
+  image: string;
 }
 
-const InfoGrid: React.FC<{ onPostClick: (postId: number) => void }> = ({ onPostClick }) => {
-  const [infoItems, setInfoItems] = useState<InfoItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+interface InfoGridProps {
+  onPostClick: (id: number) => void;
+}
 
-  const fetchInfoItems = async () => {
-    try {
-      const response = await fetch("/api/info-items");
-      if (!response.ok) {
-        throw new Error("데이터를 불러오는 데 실패했습니다.");
-      }
-      const data = await response.json();
-      setInfoItems(data.data.posts);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchInfoItems();
-  }, []);
+const InfoGrid: React.FC<InfoGridProps> = ({ onPostClick }) => {
+  const infoItems: InfoItem[] = [
+    {
+      id: 1,
+      title: "냉장고 파먹기! 남은 야식 처리법 5가지 추천",
+      date: "2025.01.11",
+      image: R4,
+    },
+    {
+      id: 2,
+      title: "서울 시내 24시간 심야 식당 소개 3선",
+      date: "2025.01.11",
+      image: R5,
+    },
+    {
+      id: 3,
+      title: "늦은 밤 부담없이 즐기는 대파 방울토마토 구이 레시피",
+      date: "2025.01.11",
+      image: R6,
+    },
+    {
+      id: 4,
+      title: "역류성 식도염을 부르는 야식, 예방법은?",
+      date: "2025.01.11",
+      image: R7,
+    },
+  ];
 
   return (
-    <div className="min-h-[300px]">
-      {isLoading && <p className="text-center mt-4">로딩 중...</p>}
-      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-      <div className="grid grid-cols-2 gap-4">
-        {infoItems.map((item) => (
-          <div
-            key={item.postId}
-            className="rounded-lg overflow-hidden border shadow-md bg-white cursor-pointer"
-            onClick={() => onPostClick(item.postId)}
-          >
-            <img src={item.image_url} alt={item.title} className="w-full h-24 object-cover" />
-            <div className="p-2">
-              <h3 className="text-sm font-semibold">{item.title}</h3>
-              <p className="text-xs text-gray-500">{item.date}</p>
-            </div>
+    <div className="grid grid-cols-2 gap-4">
+      {infoItems.map((item) => (
+        <div
+          key={item.id}
+          className="rounded-lg overflow-hidden bg-white cursor-pointer"
+          onClick={() => onPostClick(item.id)}
+        >
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-36 object-cover rounded-lg"
+          />
+          <div className="p-2 flex flex-col justify-start">
+            <h3
+              className="text-lg font-pretendard mt-0 break-words overflow-hidden text-ellipsis"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2, // 최대 줄 수 제한
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {item.title}
+            </h3>
+            <p className="text-md font-pretendard text-gray-500">{item.date}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
