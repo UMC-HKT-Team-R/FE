@@ -1,13 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import banner1 from "../assets/banner1.png";
 import banner2 from "../assets/banner2.png";
 import banner3 from "../assets/banner3.png";
-import sampleImage from "../assets/banner2.png";
 import FloatingWriteButton from "@/components/FloatingWriteButton";
+import { getPosts } from "@/services/post";
 
 function Post() {
   const navigate = useNavigate();
+
+  const [posts, setPosts] = useState<
+  Array<{
+    postId: number;
+    title: string;
+    body: string;
+    date: string;
+    imageUrl?: string;
+    commentCount: number;
+  }>
+>([]);
+const [currentIndex, setCurrentIndex] = useState(0);
+  const [startX, setStartX] = useState<number | null>(null);
+
 
   const handlePostClick = (postId: number) => {
     navigate(`/post-detail/${postId}`);
@@ -35,58 +49,77 @@ function Post() {
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [startX, setStartX] = useState<number | null>(null);
 
-  const posts = [
-    {
-      postId: 1,
-      title: "야메추 부탁해요",
-      body: "아까 점심은 서브웨이 먹었는데 야식으로 좀 안 느끼한 거 먹고 싶어요 되도록 일식 중에서 추천 부탁드립니다.",
-      date: "25. 01. 11. 12:13",
-      comments: 3,
-      image: sampleImage,
-    },
-    {
-      postId: 2,
-      title: "비빔 참치 우동 후기",
-      body: "이거 진짜 미친놈임 성시경 레시피라고 인터넷에 검색하면 나오는데 진짜 미친 맛이다",
-      date: "25. 01. 03. 12:13",
-      comments: 5,
-    },
-    {
-      postId: 3,
-      title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
-      body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
-      date: "24. 12. 31. 12:13",
-      comments: 2,
-      image: sampleImage,
-    },
-    {
-      postId: 4,
-      title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
-      body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
-      date: "24. 12. 31. 12:13",
-      comments: 2,
-      image: sampleImage,
-    },
-    {
-      postId: 5,
-      title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
-      body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
-      date: "24. 12. 31. 12:13",
-      comments: 2,
-      image: sampleImage,
-    },
-    {
-      postId: 6,
-      title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
-      body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
-      date: "24. 12. 31. 12:13",
-      comments: 2,
-      image: sampleImage,
-    },
-  ];
+  // const posts = [
+  //   {
+  //     postId: 1,
+  //     title: "야메추 부탁해요",
+  //     body: "아까 점심은 서브웨이 먹었는데 야식으로 좀 안 느끼한 거 먹고 싶어요 되도록 일식 중에서 추천 부탁드립니다.",
+  //     date: "25. 01. 11. 12:13",
+  //     comments: 3,
+  //     image: sampleImage,
+  //   },
+  //   {
+  //     postId: 2,
+  //     title: "비빔 참치 우동 후기",
+  //     body: "이거 진짜 미친놈임 성시경 레시피라고 인터넷에 검색하면 나오는데 진짜 미친 맛이다",
+  //     date: "25. 01. 03. 12:13",
+  //     comments: 5,
+  //   },
+  //   {
+  //     postId: 3,
+  //     title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
+  //     body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
+  //     date: "24. 12. 31. 12:13",
+  //     comments: 2,
+  //     image: sampleImage,
+  //   },
+  //   {
+  //     postId: 4,
+  //     title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
+  //     body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
+  //     date: "24. 12. 31. 12:13",
+  //     comments: 2,
+  //     image: sampleImage,
+  //   },
+  //   {
+  //     postId: 5,
+  //     title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
+  //     body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
+  //     date: "24. 12. 31. 12:13",
+  //     comments: 2,
+  //     image: sampleImage,
+  //   },
+  //   {
+  //     postId: 6,
+  //     title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
+  //     body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
+  //     date: "24. 12. 31. 12:13",
+  //     comments: 2,
+  //     image: sampleImage,
+  //   },
+  // ];
+
+
+  const fetchPosts = async () => {
+    try {
+      const response = await getPosts();
+      if (response.isSuccess  && response.result?.posts) {
+        setPosts(response.result.posts);
+      } else {
+        console.error("Invalid API response structure:", response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    }
+  };
+  
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
@@ -153,10 +186,10 @@ function Post() {
       </main>
 
       <div className="flex-1 overflow-y-auto px-4 mt-2 mb-20 max-w-max-size mx-auto">
-        {posts.map((post, index) => (
+        {posts.map((post) => (
           <button
-            key={index}
-            onClick={() => handlePostClick(post.postId)}
+          key={post.postId}
+          onClick={() => handlePostClick(post.postId)}
             className="cursor-pointer py-5 flex justify-between items-center w-full border-b border-grey100 last:border-none"
           >
             <div className="flex flex-col items-start gap-1 truncate-2 text-start">
@@ -187,13 +220,13 @@ function Post() {
                   className="ml-[3px] text-[#0051FF]"
                   style={{ fontFamily: "Pretendard", fontWeight: 400 }}
                 >
-                  {post.comments}
+                  {post.commentCount}
                 </span>
               </div>
             </div>
-            {post.image && (
+            {post.imageUrl  && (
               <img
-                src={post.image}
+                src={post.imageUrl }
                 alt="게시글 이미지"
                 className="w-20 h-20 rounded-[6px] flex-shrink-0 ml-4"
               />

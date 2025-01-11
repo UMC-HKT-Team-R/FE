@@ -15,7 +15,26 @@ interface CreatePostResponse {
   };
 }
 
+interface GetPostsResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    posts: Array<{
+      postId: number;
+      title: string;
+      body: string;
+      date: string;
+      imageUrl?: string;
+      commentCount: number;
+    }>;
+  };
+}
 
+export const getPosts = async (): Promise<GetPostsResponse> => {
+  const response = await api.get<GetPostsResponse>("/api/post/all");
+  return response.data;
+};
 
 export const createPost = async (data: CreatePostRequest): Promise<CreatePostResponse> => {
   const formData = new FormData();
