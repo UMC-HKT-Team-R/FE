@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Rollback from "@/assets/roll-back.svg?react";
 import { getRecommend } from "@/services/recommend";
-import { FoodType } from "@/constants/food-type";
+import { FOOD_TYPE, FoodType } from "@/constants/food-type";
+import { useNavigate } from "react-router-dom";
 
 interface RecommendResult {
   category: string;
@@ -19,6 +20,8 @@ const Recommend = () => {
   const [data, setData] = useState<Response | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+
+  const navigate = useNavigate();
 
   const onClickReset = () => {
     setIsLoading(true);
@@ -45,6 +48,18 @@ const Recommend = () => {
     }
   };
 
+  const onNavToAddMenu = (type: FoodType) => {
+    const color = type === FOOD_TYPE.WHITE ? "white" : "black";
+    navigate(`/add-menu`, {
+      state: {
+        category: data?.[color]?.[0].category,
+        content: data?.[color]?.[0].menu,
+        date: new Date(),
+        type,
+      },
+    });
+  };
+
   useEffect(() => {
     if (isLoading) {
       fetchData();
@@ -67,6 +82,7 @@ const Recommend = () => {
           </div>
           <button
             type="button"
+            onClick={() => onNavToAddMenu(FOOD_TYPE.WHITE)}
             className="w-14 h-14 bg-blue1 rounded-full text-white font-semibold text-lg"
           >
             Pick!
@@ -88,6 +104,7 @@ const Recommend = () => {
           </div>
           <button
             type="button"
+            onClick={() => onNavToAddMenu(FOOD_TYPE.BLACK)}
             className="w-14 h-14 bg-yellow1 rounded-full font-semibold text-lg text-black"
           >
             Pick!

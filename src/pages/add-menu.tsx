@@ -28,8 +28,9 @@ const DEFAULT_VALUE = {
 
 function AddMenu() {
   const { state } = useLocation();
+  const readOnly = state !== null;
 
-  const [data, setData] = useState<Data>(state || DEFAULT_VALUE);
+  const [data, setData] = useState<Data>({ ...DEFAULT_VALUE, ...state });
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -153,6 +154,7 @@ function AddMenu() {
               !data.date && "text-grey300"
             }`}
             onClick={onToggleCalendar}
+            disabled={readOnly}
           >
             {formatDate(data.date) || "날짜를 선택하세요."}
           </button>
@@ -172,6 +174,7 @@ function AddMenu() {
               !data.category && "text-grey300"
             }`}
             onClick={onOpenBottomDrawer}
+            disabled={readOnly}
           >
             {data.category || "카테고리를 선택하세요."}
           </button>
@@ -184,6 +187,7 @@ function AddMenu() {
                 data.type === FOOD_TYPE.BLACK && "bg-black text-white"
               }`}
               onClick={() => onSelectType(FOOD_TYPE.BLACK)}
+              disabled={readOnly}
             >
               흑색
             </button>
@@ -192,6 +196,7 @@ function AddMenu() {
                 data.type === FOOD_TYPE.WHITE && "bg-black text-white"
               }`}
               onClick={() => onSelectType(FOOD_TYPE.WHITE)}
+              disabled={readOnly}
             >
               백색
             </button>
@@ -206,6 +211,7 @@ function AddMenu() {
               className="bg-transparent placeholder:text-grey300 flex-1 outline-none"
               onChange={onChange}
               maxLength={14}
+              readOnly={readOnly}
             />
             <span className="text-sm text-grey300">{data.content.length} / 14</span>
           </div>
