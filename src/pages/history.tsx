@@ -4,6 +4,7 @@ import { formatDate } from "@/utils/date";
 import food from "@/assets/food.png";
 import Card from "@/components/card";
 import { useNavigate } from "react-router-dom";
+import Add from "@/assets/add.svg?react";
 
 const histories = [
   {
@@ -61,22 +62,22 @@ function History() {
   return (
     <main>
       <InlineCalendar selectedDate={date} onChange={onSelectedDate} />
-      <section className="flex items-center gap-2 text-sm">
-        <p className="border border-black flex-1 text-center py-1.5 rounded-lg">
+      <section className="flex items-center gap-2 text-md">
+        <p className="border border-black flex-1 text-center py-2 rounded-lg">
           백색 야식 <span className="font-semibold">13일</span>
         </p>
-        <p className="border border-black flex-1 text-center py-1.5 rounded-lg bg-black text-white">
+        <p className="border border-black flex-1 text-center py-2 rounded-lg bg-black text-white">
           흑색 야식 <span className="font-semibold">13일</span>
         </p>
       </section>
       <section className="mt-8 space-y-5">
         <div className="flex items-center justify-between">
-          <p className="text-lg font-semibold">{formatDate(selectedDate)}</p>
+          <p className="text-xl font-semibold">{formatDate(selectedDate)}</p>
           <button
             onClick={onClickAddHistory}
-            className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full"
+            className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full flex justify-center items-center"
           >
-            +
+            <Add />
           </button>
         </div>
         {histories.length > 0 ? (

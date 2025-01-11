@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function PostWrite() {
-
-  
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -48,17 +46,16 @@ function PostWrite() {
         />
         <div className="w-full border-t border-[#F3F4F8] mb-4"></div>
         <textarea
-  placeholder="야식에 대해 자유롭게 이야기를 나눠보세요."
-  className="w-full text-[#000] placeholder-[#B3B5BC] font-pretendard text-[15px] font-normal leading-[20px] resize-none focus:outline-none"
-  style={{
-    fontFamily: "Pretendard",
-    height: "auto",
-    maxHeight: "120px", 
-    overflowY: "auto",
-  }}
-  rows={1} 
-></textarea>
-
+          placeholder="야식에 대해 자유롭게 이야기를 나눠보세요."
+          className="w-full text-[#000] placeholder-[#B3B5BC] font-pretendard text-[15px] font-normal leading-[20px] resize-none focus:outline-none"
+          style={{
+            fontFamily: "Pretendard",
+            height: "auto",
+            maxHeight: "120px",
+            overflowY: "auto",
+          }}
+          rows={1}
+        ></textarea>
       </div>
 
       <div className="flex flex-col h-full items-center px-4">
@@ -83,14 +80,9 @@ function PostWrite() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center mt-auto mb-[44px]">
+          <div className="flex flex-col items-center fixed bottom-14">
             <label className="flex gap-[8px] items-center justify-center w-[122px] h-[38px] bg-[#000] rounded-[8px] text-[#FFF] font-pretendard text-[15px] font-semibold leading-[20px] cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageUpload}
-              />
+              <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"

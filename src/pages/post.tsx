@@ -93,9 +93,7 @@ function Post() {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? banners.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? banners.length - 1 : prevIndex - 1));
   };
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
@@ -106,8 +104,7 @@ function Post() {
   const handleDragEnd = (e: React.MouseEvent | React.TouchEvent) => {
     if (startX === null) return;
 
-    const clientX =
-      "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientX = "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
     const diff = startX - clientX;
 
     if (diff > 50) {
@@ -122,7 +119,7 @@ function Post() {
   return (
     <div className="flex flex-col h-screen">
       <main
-        className="relative w-full h-[80px] overflow-hidden flex-shrink-0"
+        className="relative w-full h-32 overflow-hidden flex-shrink-0"
         onMouseDown={handleDragStart}
         onMouseUp={handleDragEnd}
         onMouseLeave={handleDragEnd}
@@ -137,23 +134,11 @@ function Post() {
           />
         </div>
 
-        <div className="absolute top-[18px] left-[21px] z-20">
-          <p
-            className="text-white font-medium text-[15px] leading-[20px]"
-            style={{
-              fontFamily: "Pretendard",
-              fontWeight: 500,
-            }}
-          >
+        <div className="absolute flex flex-col h-full justify-center z-20 font-pretendard">
+          <p className="text-white font-medium text-lg leading-[20px]">
             {banners[currentIndex].topText}
           </p>
-          <p
-            className="text-white font-semibold text-[18px] leading-[24px] mt-1"
-            style={{
-              fontFamily: "Pretendard",
-              fontWeight: 600,
-            }}
-          >
+          <p className="text-white font-semibold text-[22px] leading-[24px] mt-1 ">
             {banners[currentIndex].bottomText}
           </p>
         </div>
@@ -174,58 +159,53 @@ function Post() {
         </div>
       </main>
 
-      <div className="flex-1 overflow-y-auto px-4 mt-2 mb-[80px]">
+      <div className="flex-1 overflow-y-auto px-4 mt-2 mb-20 max-w-max-size mx-auto">
         {posts.map((post, index) => (
-          <div
+          <button
             key={index}
-            className="mb-6 cursor-pointer"
             onClick={() => handlePostClick(post.postId)}
+            className="cursor-pointer py-5 flex justify-between items-center w-full border-b border-grey100 last:border-none"
           >
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h3 className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px] mb-[4px]">
-                  {post.title}
-                </h3>
-                <p className="text-[#5B5D6A] font-pretendard text-[12px] leading-[16px] overflow-hidden text-ellipsis">
-                  {post.body}
-                </p>
-                <div className="flex font-pretendard items-center mt-[8px] text-[12px] leading-[16px]">
-                  <span className="text-[#B3B5BC]">{post.date}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    className="ml-2"
-                  >
-                    <path
-                      d="M10.5 7.5C10.5 7.76522 10.3946 8.01957 10.2071 8.20711C10.0196 8.39464 9.76522 8.5 9.5 8.5H3.5L1.5 10.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H9.5C9.76522 1.5 10.0196 1.60536 10.2071 1.79289C10.3946 1.98043 10.5 2.23478 10.5 2.5V7.5Z"
-                      stroke="#0051FF"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span
-                    className="ml-[3px] text-[#0051FF]"
-                    style={{ fontFamily: "Pretendard", fontWeight: 400 }}
-                  >
-                    {post.comments}
-                  </span>
-                </div>
+            <div className="flex flex-col items-start gap-1 truncate-2 text-start">
+              <h3 className="text-[#000] font-pretendard font-medium text-lg leading-[20px] mb-[4px]">
+                {post.title}
+              </h3>
+              <p className="text-[#5B5D6A] font-pretendard text-md leading-[20px] truncate-2">
+                {post.body}
+              </p>
+              <div className="flex font-pretendard items-center mt-[8px] text-[12px] leading-[16px]">
+                <span className="text-[#B3B5BC]">{post.date}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className="ml-2"
+                >
+                  <path
+                    d="M10.5 7.5C10.5 7.76522 10.3946 8.01957 10.2071 8.20711C10.0196 8.39464 9.76522 8.5 9.5 8.5H3.5L1.5 10.5V2.5C1.5 2.23478 1.60536 1.98043 1.79289 1.79289C1.98043 1.60536 2.23478 1.5 2.5 1.5H9.5C9.76522 1.5 10.0196 1.60536 10.2071 1.79289C10.3946 1.98043 10.5 2.23478 10.5 2.5V7.5Z"
+                    stroke="#0051FF"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span
+                  className="ml-[3px] text-[#0051FF]"
+                  style={{ fontFamily: "Pretendard", fontWeight: 400 }}
+                >
+                  {post.comments}
+                </span>
               </div>
-              {post.image && (
-                <img
-                  src={post.image}
-                  alt="게시글 이미지"
-                  className="w-[80px] h-[80px] rounded-[6px] flex-shrink-0 ml-4"
-                />
-              )}
             </div>
-            {index < posts.length - 1 && (
-              <div className="w-full h-0 border-t border-[#F3F4F8] mt-4"></div>
+            {post.image && (
+              <img
+                src={post.image}
+                alt="게시글 이미지"
+                className="w-20 h-20 rounded-[6px] flex-shrink-0 ml-4"
+              />
             )}
-          </div>
+          </button>
         ))}
       </div>
       <FloatingWriteButton onClick={handleWriteClick} />
