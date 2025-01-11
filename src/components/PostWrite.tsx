@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function PostWrite() {
+
+  
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -32,10 +34,7 @@ function PostWrite() {
             />
           </svg>
         </button>
-        <span
-          className="text-[#0051FF] font-pretendard font-semibold text-[15px] leading-[20px]"
-          style={{ fontFamily: "Pretendard" }}
-        >
+        <span className="text-[#0051FF] font-pretendard font-semibold text-[15px] leading-[20px]">
           게시
         </span>
       </header>
@@ -49,10 +48,17 @@ function PostWrite() {
         />
         <div className="w-full border-t border-[#F3F4F8] mb-4"></div>
         <textarea
-          placeholder="야식에 대해 자유롭게 이야기를 나눠보세요."
-          className="w-full h-[120px] text-[#000] placeholder-[#B3B5BC] font-pretendard text-[15px] font-normal leading-[20px] resize-none focus:outline-none"
-          style={{ fontFamily: "Pretendard" }}
-        ></textarea>
+  placeholder="야식에 대해 자유롭게 이야기를 나눠보세요."
+  className="w-full text-[#000] placeholder-[#B3B5BC] font-pretendard text-[15px] font-normal leading-[20px] resize-none focus:outline-none"
+  style={{
+    fontFamily: "Pretendard",
+    height: "auto",
+    maxHeight: "120px", 
+    overflowY: "auto",
+  }}
+  rows={1} 
+></textarea>
+
       </div>
 
       <div className="flex flex-col h-full items-center px-4">

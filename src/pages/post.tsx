@@ -6,9 +6,12 @@ import banner3 from "../assets/banner3.png";
 import sampleImage from "../assets/banner2.png";
 import FloatingWriteButton from "@/components/FloatingWriteButton";
 
-
 function Post() {
   const navigate = useNavigate();
+
+  const handlePostClick = (postId: number) => {
+    navigate(`/post-detail/${postId}`);
+  };
 
   const handleWriteClick = () => {
     navigate("/post-write");
@@ -37,6 +40,7 @@ function Post() {
 
   const posts = [
     {
+      postId: 1,
       title: "야메추 부탁해요",
       body: "아까 점심은 서브웨이 먹었는데 야식으로 좀 안 느끼한 거 먹고 싶어요 되도록 일식 중에서 추천 부탁드립니다.",
       date: "25. 01. 11. 12:13",
@@ -44,12 +48,14 @@ function Post() {
       image: sampleImage,
     },
     {
+      postId: 2,
       title: "비빔 참치 우동 후기",
       body: "이거 진짜 미친놈임 성시경 레시피라고 인터넷에 검색하면 나오는데 진짜 미친 맛이다",
       date: "25. 01. 03. 12:13",
       comments: 5,
     },
     {
+      postId: 3,
       title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
       body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
       date: "24. 12. 31. 12:13",
@@ -57,6 +63,7 @@ function Post() {
       image: sampleImage,
     },
     {
+      postId: 4,
       title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
       body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
       date: "24. 12. 31. 12:13",
@@ -64,6 +71,7 @@ function Post() {
       image: sampleImage,
     },
     {
+      postId: 5,
       title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
       body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
       date: "24. 12. 31. 12:13",
@@ -71,6 +79,7 @@ function Post() {
       image: sampleImage,
     },
     {
+      postId: 6,
       title: "야식 먹다 체한 거 같은데 소화제 뭐가 좋나요",
       body: "원래 야식 잘 안 먹는데 괜히 스트레스 풀려고 먹다가 체한 거 같아요...",
       date: "24. 12. 31. 12:13",
@@ -167,7 +176,11 @@ function Post() {
 
       <div className="flex-1 overflow-y-auto px-4 mt-2 mb-[80px]">
         {posts.map((post, index) => (
-          <div key={index} className="mb-6">
+          <div
+            key={index}
+            className="mb-6 cursor-pointer"
+            onClick={() => handlePostClick(post.postId)}
+          >
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <h3 className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px] mb-[4px]">
