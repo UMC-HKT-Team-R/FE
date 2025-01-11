@@ -11,7 +11,6 @@ import { deletePost } from "@/services/post";
 import { createComment, deleteComment } from "@/services/comment";
 import { getMypageData } from "@/services/my";
 
-
 function PostDetail() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
@@ -21,28 +20,25 @@ function PostDetail() {
   const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
   const [commentBody, setCommentBody] = useState<string>("");
   const [commentList, setCommentList] = useState<
-  {
-    id: number;
-    username: string;
-    type: string;
-    profile: string;
-    content: string;
-    date: string;
-  }[]
->([]); 
+    {
+      id: number;
+      username: string;
+      type: string;
+      profile: string;
+      content: string;
+      date: string;
+    }[]
+  >([]);
   const [userNickname, setUserNickname] = useState<string>("");
-  const [userType, setUserType] = useState<string>(""); 
+  const [userType, setUserType] = useState<string>("");
   const [profileImage, setProfileImage] = useState<string>(profile5);
 
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const adjustHeight = () => {
     if (textAreaRef.current) {
-      textAreaRef.current.style.height = "auto"; 
-      textAreaRef.current.style.height = `${Math.min(
-        textAreaRef.current.scrollHeight,
-        100 
-      )}px`;
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height = `${Math.min(textAreaRef.current.scrollHeight, 100)}px`;
     }
   };
 
@@ -54,10 +50,8 @@ function PostDetail() {
     return { type: "자극 중독 미식가", image: profile5 };
   };
 
-
-
   useEffect(() => {
-    adjustHeight(); 
+    adjustHeight();
   }, [commentBody]);
 
   useEffect(() => {
@@ -84,7 +78,7 @@ function PostDetail() {
 
     try {
       const response = await createComment(Number(postId), { content: commentBody });
-  
+
       if (response?.result?.commentId) {
         setCommentList((prev) => [
           ...prev,
@@ -211,49 +205,28 @@ function PostDetail() {
 
         {commentList.length > 0 ? (
           commentList.map((comment) => (
-            <div key={comment.id}>
-              <div className="flex mb-[6px]">
+            <div key={comment.id} className="mb-6">
+              <div className="flex items-center mb-2">
                 <img
                   src={comment.profile}
                   alt="프로필"
-                  className="w-[40px] h-[40px] rounded-full flex-shrink-0"
+                  className="w-[28px]  h-[28px] rounded-full flex-shrink-0"
                 />
-                <div className="ml-4 flex-1">
-                  <div className="flex justify-between">
-                    <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
-                      {comment.username}
-                    </span>
-                    <button onClick={() => handleDeleteComment(comment.id)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                      >
-                        <path
-                          d="M21 7L7 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M7 7L21 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
-                    {comment.content}
-                  </p>
-                  <div className="text-[#B3B5BC] font-pretendard text-[12px] leading-[16px] mt-[8px]">
-                    {comment.date}
-                  </div>
+                <div className="ml-2">
+                  <span className="text-[#000] font-pretendard  font-medium text-[15px] leading-[20px]">
+                    {comment.username}
+                  </span>
+                  <span className="text-[#777986] font-pretendard  text-[15px] font-medium leading-[20px] ml-1">
+                    · {comment.type}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mb-1">
+                  {comment.content}
+                </p>
+                <div className="text-[#B3B5BC] font-pretendard  text-[12px] leading-[16px]">
+                  {comment.date}
                 </div>
               </div>
             </div>
