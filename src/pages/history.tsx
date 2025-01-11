@@ -81,7 +81,7 @@ function History() {
           </button>
         </div>
         {histories.length > 0 ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 pb-24">
             {histories.map((history) => (
               <Card key={history.id} {...history} onClickDelete={onOpenModal} />
             ))}
