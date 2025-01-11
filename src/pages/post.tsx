@@ -131,10 +131,11 @@ function Post() {
             src={banners[currentIndex].image}
             alt={`배너 ${currentIndex + 1}`}
             className="w-full h-full object-cover"
+            style={{ filter: "brightness(50%)" }}
           />
         </div>
 
-        <div className="absolute flex flex-col h-full justify-center z-20 font-pretendard">
+        <div className="absolute flex flex-col h-full justify-center z-1 font-pretendard">
           <p className="text-white font-medium text-lg leading-[20px]">
             {banners[currentIndex].topText}
           </p>
@@ -143,13 +144,10 @@ function Post() {
           </p>
         </div>
 
-        <div className="absolute inset-0 bg-[#000000] bg-opacity-50 z-10"></div>
-
         <div
-          className="absolute right-[8px] bottom-[8px] flex items-center justify-center h-[16px] px-[6px] bg-white bg-opacity-70 z-20 rounded-[16px]"
+          className="absolute right-[8px] bottom-[8px] flex items-center justify-center px-2 py-1.5 bg-white bg-opacity-70 z-20 rounded-[16px] text-md"
           style={{
             fontFamily: "Pretendard",
-            fontSize: "9px",
             fontWeight: 600,
             lineHeight: "12px",
             color: "#000",
