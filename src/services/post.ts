@@ -31,8 +31,31 @@ interface GetPostsResponse {
   };
 }
 
+export interface GetPostDetailResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    nickname: string;
+    title: string;
+    body: string;
+    imageUrl?: string;
+    comments: Array<{
+      commentId: number;
+      nickname: string;
+      content: string;
+      date: string;
+    }>;
+  };
+}
+
 export const getPosts = async (): Promise<GetPostsResponse> => {
   const response = await api.get<GetPostsResponse>("/api/post/all");
+  return response.data;
+};
+
+export const getPostDetail = async (postId: number): Promise<GetPostDetailResponse> => {
+  const response = await api.get<GetPostDetailResponse>(`/api/post/${postId}`);
   return response.data;
 };
 
