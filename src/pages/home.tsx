@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import InfoGrid from "../components/InfoGrid";
 import WhiteRankingList from "../components/WhiteRankingList";
 import BlackRankingList from "../components/BlackRankingList";
@@ -54,14 +54,13 @@ function Home() {
           ) : (
             <div className="w-full max-w-max-size">
               <button
-               className="bg-yellow1 font-pretendard text-black w-full px-4 py-3 my-2 rounded-md flex items-center justify-center text-md"
-               onClick={() => (window.location.href = "/login")}
-           >
-              <img src="/src/assets/Kakao.svg" alt="카카오" className="w-5 h-5 mr-2" />
-              카카오로 로그인하기
-            </button>
-          </div>
-          
+                className="bg-yellow1 font-pretendard text-black w-full px-4 py-3 my-2 rounded-md flex items-center justify-center text-md"
+                onClick={() => (window.location.href = "/login")}
+              >
+                <img src="/src/assets/Kakao.svg" alt="카카오" className="w-5 h-5 mr-2" />
+                카카오로 로그인하기
+              </button>
+            </div>
           )}
         </section>
 
@@ -78,11 +77,8 @@ function Home() {
         {/* 섹션 3: 시크릿 야식 정보 */}
         <section>
           <h2 className="text-xl font-hsBombaram mb-2">흑백 야식가를 위한</h2>
-          <h2
-             className="text-xl font-hsBombaram mb-2"
-             style={{ color: '#422A2A' }}
-          >
-             시크릿 야식 정보
+          <h2 className="text-xl font-hsBombaram mb-2" style={{ color: "#422A2A" }}>
+            시크릿 야식 정보
           </h2>
 
           <InfoGrid />

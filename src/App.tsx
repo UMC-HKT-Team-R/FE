@@ -8,14 +8,19 @@ import Recommend from "./pages/recommend";
 import Post from "./pages/post";
 import History from "./pages/history";
 import Mypage from "./pages/mypage";
+import PostDetail from "./components/PostDetail";
+import PostWrite from "./components/PostWrite";
 import AddMenu from "./pages/add-menu";
 import Callback from "./pages/callback";
+
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="post-write" element={<PostWrite />} />
+        <Route path="post-detail/:postId" element={<PostDetail />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/recommend" element={<Recommend />} />

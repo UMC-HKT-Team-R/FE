@@ -43,9 +43,7 @@ function Mypage() {
       </div>
       <div className="h-4 -mx-4 bg-gray-100 mt-5" />
       <div className="mt-6">
-        <p className="text-xl font-semibold text-center font-hsBombaram">
-          2025년 1월 야식 결산
-        </p>
+        <p className="text-xl font-semibold text-center font-hsBombaram">2025년 1월 야식 결산</p>
         <div className="mt-4 px-14">
           <Doughnut data={data} options={options} />
         </div>
