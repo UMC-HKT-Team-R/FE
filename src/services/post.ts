@@ -30,8 +30,8 @@ export const createPost = async (data: CreatePostRequest): Promise<CreatePostRes
     formData.append("image", data.image);
   }
 
-  console.log("Request URL:", import.meta.env.VITE_BASE_URL + "/api/post");
-  console.log("FormData:", formData);
+  // console.log("Request URL:", import.meta.env.VITE_BASE_URL + "/api/post");
+  // console.log("FormData:", formData);
 
   const response = await api.post<CreatePostResponse>("/api/post/", formData, {
     headers: {
