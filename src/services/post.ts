@@ -15,8 +15,6 @@ interface CreatePostResponse {
   };
 }
 
-
-
 export const createPost = async (data: CreatePostRequest): Promise<CreatePostResponse> => {
   const formData = new FormData();
 
@@ -41,7 +39,6 @@ export const createPost = async (data: CreatePostRequest): Promise<CreatePostRes
 
   return response.data;
 };
-
 
 export const deletePost = async (postId: number): Promise<void> => {
   console.log("Delete Request URL:", `/api/post/${postId}`);
