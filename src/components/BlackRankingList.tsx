@@ -19,7 +19,7 @@ const BlackRankingList = () => {
     <div className="border-2 border-black rounded-lg p-4 bg-black">
       {/* 타이틀과 날짜 */}
       <div className="flex justify-between items-center mb-4 text-white">
-        <h2 className="text-lg font-bold font-pretendard">흑색 야식 랭킹</h2>
+        <h2 className="text-xl font-pretendard">흑색 야식 랭킹</h2>
         <span className="text-sm font-bold text-white">25. 01. 11.</span>
       </div>
 
@@ -28,7 +28,7 @@ const BlackRankingList = () => {
         {items.map((item) => (
           <li key={item.id} className="flex items-center">
             {/* 순번 */}
-            <div className="text-xl font-hsBombaram w-8 text-center text-white">{item.id}</div>
+            <div className="text-xl font-hsBombaram w-8 text-center text-white mr-2">{item.id}</div>
 
             {/* 이미지 */}
             <img
