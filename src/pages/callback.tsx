@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getLogin } from "@/services/get-login";
+import { getLogin } from "@/services/member";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Callback = () => {
