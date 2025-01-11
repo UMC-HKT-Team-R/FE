@@ -1,4 +1,3 @@
-// src/App.tsx
 import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Home from "./pages/home";
@@ -9,13 +8,18 @@ import Recommend from "./pages/recommend";
 import Post from "./pages/post";
 import History from "./pages/history";
 import Mypage from "./pages/mypage";
+import PostDetail from "./components/postDetail";
+import PostWrite from "./components/PostWrite";
 import AddMenu from "./pages/add-menu";
+
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="post-write" element={<PostWrite />} />
+        <Route path="post-detail/:postId" element={<PostDetail />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/recommend" element={<Recommend />} />
