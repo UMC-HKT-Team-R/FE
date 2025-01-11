@@ -212,7 +212,6 @@ function Post() {
                 </div>
               </div>
 
-              {/* 이미지 섹션 */}
               {post.image && (
                 <div className="ml-4 flex-shrink-0">
                   <img
@@ -223,8 +222,6 @@ function Post() {
                 </div>
               )}
             </div>
-
-            {/* 구분선 */}
             {index < posts.length - 1 && (
               <div className="w-full h-0 border-t border-[#F3F4F8] mt-4"></div>
             )}

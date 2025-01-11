@@ -7,8 +7,7 @@ const comments = [
     id: 1,
     username: "낭만고양이",
     profile: "/path/to/logo1.png",
-    content:
-      "점심 깔끔한 거 먹었으면 야식은 좀 무겁게 먹어야죠 라면 추천드립니다 ㅋㅋㅋㅋㅋ",
+    content: "점심 깔끔한 거 먹었으면 야식은 좀 무겁게 먹어야죠 라면 추천드립니다 ㅋㅋㅋㅋㅋ",
     date: "24. 12. 31. 12:13",
   },
   {
@@ -25,9 +24,7 @@ function PostDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
-  const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
-    null
-  );
+  const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
 
   const handleDeleteComment = (id: number) => {
     setSelectedCommentId(id);
@@ -45,13 +42,13 @@ function PostDetail() {
 
   const confirmDeletePost = () => {
     setIsPostModalOpen(false);
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="flex items-center w-full h-[68px] px-4">
-        <button className="mr-auto" onClick={() => navigate(-1)}>
+  <header className="flex items-center w-full h-[68px] px-4 bg-white z-10 sticky top-0">
+  <button className="mr-auto" onClick={() => navigate(-1)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="10"
@@ -78,11 +75,7 @@ function PostDetail() {
 
       <div className="flex-1 overflow-y-auto p-4 pb-[80px]">
         <div className="flex items-center mb-[24px]">
-          <img
-            src="/path/to/logo.png"
-            alt="로고"
-            className="w-[40px] h-[40px] rounded-full"
-          />
+          <img src="/path/to/logo.png" alt="로고" className="w-[40px] h-[40px] rounded-full" />
           <div className="ml-4">
             <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
               유저 이름
@@ -166,7 +159,7 @@ function PostDetail() {
           </div>
         )}
       </div>
-<div className="fixed bottom-0 left-0 w-full bg-white p-4 border-t border-[#F3F4F8]">
+      <div className="fixed bottom-0 left-0 w-full bg-white p-4 border-t border-[#F3F4F8]">
         <div className="flex items-center bg-[#F3F4F8] rounded-[8px] px-[12px]">
           <input
             type="text"
@@ -248,7 +241,7 @@ function PostDetail() {
             className="flex flex-col justify-between pt-[52px] px-[17px] pb-[12px]"
           >
             <p className="text-[#000] font-pretendard text-center font-medium text-[15px] leading-[20px] ">
-            게시글을 삭제할까요?
+              게시글을 삭제할까요?
             </p>
             <div className="flex justify-between mt-auto">
               <button
