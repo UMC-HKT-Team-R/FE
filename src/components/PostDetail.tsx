@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import sample from "../assets/banner1.png";
+import logo from "../assets/profile.png";
+import { deletePost } from "@/services/post";
 
 const comments = [
   {
@@ -21,9 +23,10 @@ const comments = [
 
 function PostDetail() {
   const navigate = useNavigate();
+  const { postId } = useParams<{ postId: string }>();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
   const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
 
   const handleDeleteComment = (id: number) => {
@@ -40,9 +43,14 @@ function PostDetail() {
     setIsModalOpen(false);
   };
 
-  const confirmDeletePost = () => {
-    setIsPostModalOpen(false);
-    navigate(-1);
+  const confirmDeletePost = async () => {
+    try {
+      await deletePost(Number(postId));
+      setIsPostModalOpen(false);
+      navigate("/post");
+    } catch (error) {
+      alert("게시글 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
