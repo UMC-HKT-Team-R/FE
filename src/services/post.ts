@@ -15,6 +15,8 @@ interface CreatePostResponse {
   };
 }
 
+
+
 export const createPost = async (data: CreatePostRequest): Promise<CreatePostResponse> => {
   const formData = new FormData();
 
