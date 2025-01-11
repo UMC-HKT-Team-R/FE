@@ -1,9 +1,5 @@
 function Home() {
-  return (
-    <h1 className = "font-hsBombaram">
-      흑백개발자
-    </h1>
-  );
+  return <main>This is Home</main>;
 }
 
 export default Home;
