@@ -13,8 +13,8 @@ function PostWrite() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#FFF]">
-      <header className="flex items-center w-full h-[68px] px-4">
+    <div className="flex flex-col h-screen overflow-hidden bg-[#FFF]">
+      <header className="flex items-center w-full h-[68px] px-4 ">
         <button className="mr-auto" onClick={() => navigate(-1)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
