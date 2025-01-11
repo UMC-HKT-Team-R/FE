@@ -1,5 +1,8 @@
 function Post() {
-  return <main>Post</main>;
+  return <main>
+
+    
+  </main>;
 }
 
 export default Post;
