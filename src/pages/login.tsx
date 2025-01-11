@@ -8,7 +8,9 @@ function Login() {
   const { login } = useAuth();
 
   const handleKakaoLogin = () => {
-    // 카카오 로그인 로직 추가
+    const link =
+      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8943f39e2168778d67d5cf0b2e85055c&redirect_uri=http://localhost:5173/callback";
+    window.location.href = link;
     login();
     navigate("/");
   };

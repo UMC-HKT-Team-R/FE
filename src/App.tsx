@@ -11,6 +11,7 @@ import Mypage from "./pages/mypage";
 import PostDetail from "./components/postDetail";
 import PostWrite from "./components/PostWrite";
 import AddMenu from "./pages/add-menu";
+import Callback from "./pages/callback";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/add-menu" element={<AddMenu />} />
+          <Route path="/callback" element={<Callback />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
