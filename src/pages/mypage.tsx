@@ -24,7 +24,7 @@ const options = {
 function Mypage() {
   return (
     <main className="overflow-y-auto">
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <img src={Profile} className="w-20" />
         <div className="flex flex-col gap-1 w-full">
           <div className="gap-2">
@@ -34,17 +34,19 @@ function Mypage() {
                 로그아웃
               </button>
             </div>
-            <div className="px-3 py-1 bg-gray-900 rounded text-white text-sm inline-block">
+            <div className="px-3 py-1 bg-gray-900 rounded text-white text-md inline-block">
               갈대 같은 야식가
             </div>
           </div>
-          <p className="text-sm text-black2">dlfkscigs@naver.com</p>
+          <p className="text-md text-black2">dlfkscigs@naver.com</p>
         </div>
       </div>
       <div className="h-4 -mx-4 bg-gray-100 mt-5" />
       <div className="mt-6">
-        <p className="text-xl font-semibold text-center font-hsBombaram">2025년 1월 야식 결산</p>
-        <div className="mt-4 px-14">
+        <p className="text-[22px] font-semibold text-center font-pretendard">
+          2025년 1월 야식 결산
+        </p>
+        <div className="py-4 px-14">
           <Doughnut data={data} options={options} />
         </div>
         <div className="px-1 pb-9">

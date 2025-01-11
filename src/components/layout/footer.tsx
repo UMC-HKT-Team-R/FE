@@ -19,7 +19,7 @@ function Footer() {
   return (
     <footer className="fixed bottom-0 w-full max-w-max-size px-7 bg-white z-10 -translate-x-1/2 left-1/2">
       <nav className="w-full box-border">
-        <ul className="flex justify-between pt-3 pb-7 text-xs">
+        <ul className="flex justify-between py-4 text-sm">
           {navItems.map((item) => (
             <Link to={item.path} key={item.name}>
               <li className="flex flex-col items-center gap-2">

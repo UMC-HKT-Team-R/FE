@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import InfoGrid from "../components/InfoGrid";
 import WhiteRankingList from "../components/WhiteRankingList";
 import BlackRankingList from "../components/BlackRankingList";
+import kakao from "@/assets/Kakao.svg";
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,12 +40,16 @@ function Home() {
     return 5;
   };
 
+  const handlePostClick = (id: number) => {
+    console.log(id);
+  };
+
   const gourmetRank = getGourmetRank(ratio);
 
   return (
     <>
       {/* 메인 콘텐츠 */}
-      <main className="bg-gray-100 flex flex-col overflow-auto p-4 space-y-6">
+      <main className="flex flex-col overflow-auto p-4 space-y-6">
         {/* 로그인 상태에 따른 내용 */}
         <section className="flex justify-center items-center">
           {isLoggedIn ? (
@@ -57,7 +62,7 @@ function Home() {
                 className="bg-yellow1 font-pretendard text-black w-full px-4 py-3 my-2 rounded-md flex items-center justify-center text-md"
                 onClick={() => (window.location.href = "/login")}
               >
-                <img src="/src/assets/Kakao.svg" alt="카카오" className="w-5 h-5 mr-2" />
+                <img src={kakao} alt="카카오" className="w-5 h-5 mr-2" />
                 카카오로 로그인하기
               </button>
             </div>
@@ -81,7 +86,7 @@ function Home() {
             시크릿 야식 정보
           </h2>
 
-          <InfoGrid />
+          <InfoGrid onPostClick={handlePostClick} />
         </section>
       </main>
     </>
