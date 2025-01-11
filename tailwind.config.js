@@ -1,6 +1,6 @@
+/** @type {import('tailwindcss').Config} */
 import defaultTheme from "tailwindcss/defaultTheme";
 
-/** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -14,7 +14,7 @@ export default {
         grey600: "#5B5D6B",
         grey700: "#404252",
         grey800: "#282A3A",
-        grey900: "#101223",
+        grey900: "#101123",
         grey1000: "#000000",
         yellow1: "#FFD400",
         yellow2: "#FFFCDF",
