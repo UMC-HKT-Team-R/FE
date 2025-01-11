@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
+import Login from "./pages/Login";
 import NotFound from "./pages/not-found";
 import Layout from "./components/layout";
 import Recommend from "./pages/recommend";
@@ -10,6 +11,7 @@ import Mypage from "./pages/mypage";
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/recommend" element={<Recommend />} />
