@@ -36,7 +36,6 @@ const InfoGrid: React.FC = () => {
     <div>
       {/* 로딩 상태 처리 */}
       {isLoading && <p>로딩 중...</p>}
-
       {/* 에러 처리 */}
       {error && <p className="text-red-500">{error}</p>}
 

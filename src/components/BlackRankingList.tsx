@@ -28,7 +28,6 @@ const BlackRankingList = () => {
             {/* 순번 */}
             <div className="text-xl font-hsBombaram w-8 text-center text-white">{item.id}</div>
 
-            {/* 이미지 */}
             <img src={item.image} alt={item.name} className="w-10 h-10 rounded-full mr-4" />
 
             {/* 이름 */}
