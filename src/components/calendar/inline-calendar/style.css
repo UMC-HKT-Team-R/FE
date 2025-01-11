@@ -4,7 +4,7 @@
   }
 
   .react-datepicker__month-container {
-    padding: 24px;
+    padding-bottom: 24px;
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
