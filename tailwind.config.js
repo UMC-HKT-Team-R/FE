@@ -21,6 +21,7 @@ export default {
         blue1: "#0051FF",
         blue2: "#EAF0FF",
         error: "#FF3E3E",
+        black2: "#999999",
       },
       maxWidth: {
         "max-size": "500px",
