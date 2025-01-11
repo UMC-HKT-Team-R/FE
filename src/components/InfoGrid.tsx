@@ -57,7 +57,16 @@ const InfoGrid: React.FC<InfoGridProps> = ({ onPostClick }) => {
             className="w-full h-36 object-cover rounded-lg"
           />
           <div className="p-2 flex flex-col justify-start">
-            <h3 className="text-lg font-pretendard mt-0">{item.title}</h3>
+            <h3
+              className="text-lg font-pretendard mt-0 break-words overflow-hidden text-ellipsis"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2, // 최대 줄 수 제한
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {item.title}
+            </h3>
             <p className="text-md font-pretendard text-gray-500">{item.date}</p>
           </div>
         </div>

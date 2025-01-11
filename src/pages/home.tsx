@@ -259,9 +259,9 @@ function Home() {
               <BlackRankingList />
             </section>
 
-            <section>
-              <h2 className="text-[23px] font-hsBombaram mb-0">흑백 야식가를 위한</h2>
-              <h2 className="text-[23px] font-hsBombaram mb-4">시크릿 야식 정보!</h2>
+            <section >
+              <h2 className="text-[28px] font-hsBombaram mb-0 pt-7">흑백 야식가를 위한</h2>
+              <h2 className="text-[28px] font-hsBombaram mb-4">시크릿 야식 정보!</h2>
               <InfoGrid onPostClick={handlePostClick} />
             </section>
           </>

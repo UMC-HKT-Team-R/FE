@@ -30,7 +30,7 @@ const SecretDetail: React.FC<SecretDetailProps> = ({ title, date, body, image, o
           />
           <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
             <p className="text-xl text-white mb-1 text-right p-3">{date}</p>
-            <h2 className="text-[40px] font-hsBombaram text-white">{title}</h2>
+            <h2 className="text-[35px] font-hsBombaram text-white">{title}</h2>
           </div>
         </div>
         <div className="p-4">
