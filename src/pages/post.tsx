@@ -145,13 +145,8 @@ function Post() {
         </div>
 
         <div
-          className="absolute right-[8px] bottom-[8px] flex items-center justify-center px-2 py-1.5 bg-white bg-opacity-70 z-20 rounded-[16px] text-md"
-          style={{
-            fontFamily: "Pretendard",
-            fontWeight: 600,
-            lineHeight: "12px",
-            color: "#000",
-          }}
+          className="absolute right-[8px] text-[#222] font-pretendard text-[9px] leading-[12px] bottom-[8px] flex items-center justify-center px-2 py-1.5 bg-white bg-opacity-70 z-20 rounded-[16px] text-md"
+        
         >
           {currentIndex + 1}/{banners.length}
         </div>
