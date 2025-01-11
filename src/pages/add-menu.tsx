@@ -3,9 +3,31 @@ import { FOOD_TYPE } from "@/constants/food-type";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Photo from "@/assets/photo.svg?react";
+import Calendar from "@/components/calendar";
+import { formatDate } from "@/utils/date";
+import useOutsideClick from "@/hooks/use-outside-click";
+
+interface Data {
+  date: Date | null;
+  category: string;
+  type: string;
+  content: string;
+  photo: string;
+}
+
+const categories = [
+  "한식",
+  "중식",
+  "일식",
+  "양식",
+  "아시안",
+  "패스트푸드",
+  "카페",
+  "고기",
+];
 
 const DEFAULT_VALUE = {
-  date: "",
+  date: null,
   category: "",
   type: "",
   content: "",
@@ -13,12 +35,29 @@ const DEFAULT_VALUE = {
 };
 
 function AddMenu() {
+  const [data, setData] = useState<Data>(DEFAULT_VALUE);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
+
+  const [calendarRef] = useOutsideClick<HTMLDivElement>(() =>
+    setCalendarOpen(false)
+  );
+  const [bottomDrawerRef] = useOutsideClick<HTMLDivElement>(() =>
+    setBottomDrawerOpen(false)
+  );
+
   const navigate = useNavigate();
-  const [data, setData] = useState(DEFAULT_VALUE);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const buttonDisabled =
     !data.date || !data.category || !data.type || !data.content;
+
+  console.log(buttonDisabled);
+  const bottomDrawerStyle = {
+    transition: "height 0.3s",
+    height: bottomDrawerOpen ? "264px" : "0",
+  };
 
   const onGoBack = () => {
     navigate(-1);
@@ -36,6 +75,14 @@ function AddMenu() {
       ...data,
       type,
     });
+  };
+
+  const onSelectCategory = (category: string) => {
+    setData({
+      ...data,
+      category,
+    });
+    setBottomDrawerOpen(false);
   };
 
   const onPhotoUpload = () => {
@@ -56,30 +103,58 @@ function AddMenu() {
     };
   };
 
+  const onToggleCalendar = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setCalendarOpen((prev) => !prev);
+  };
+
+  const onOpenBottomDrawer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setBottomDrawerOpen(true);
+  };
+
+  const onSelectDate = (date: Date | null) => {
+    setData({
+      ...data,
+      date: date as Date,
+    });
+    setCalendarOpen(false);
+  };
+
   return (
-    <main>
+    <main className="overflow-hidden">
       <header className="py-6 px-4">
         <button onClick={onGoBack}>
           <ArrowLeft />
         </button>
       </header>
-      <section className="flex flex-col gap-9 pb-28">
+      <section className="relative flex flex-col gap-9 pb-28">
         <div className="flex items-center gap-[50px]">
           <p className="font-semibold text-lg">날짜</p>
           <button
             className={`py-1.5 px-3 rounded-lg bg-grey100 outline-none ${
               !data.date && "text-grey300"
             }`}
+            onClick={onToggleCalendar}
           >
-            {data.date || "날짜를 선택하세요."}
+            {formatDate(data.date) || "날짜를 선택하세요."}
           </button>
+          {calendarOpen && (
+            <div ref={calendarRef} className="border border-black">
+              <Calendar
+                selectedDate={data.date ? new Date(data.date) : new Date()}
+                onChange={onSelectDate}
+              />
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-[17px]">
           <p className="font-semibold text-lg">카테고리</p>
           <button
             className={`py-1.5 px-3 rounded-lg bg-grey100 outline-none ${
-              !data.date && "text-grey300"
+              !data.category && "text-grey300"
             }`}
+            onClick={onOpenBottomDrawer}
           >
             {data.category || "카테고리를 선택하세요."}
           </button>
@@ -155,12 +230,38 @@ function AddMenu() {
       </section>
       <button
         disabled={buttonDisabled}
-        className={`fixed bottom-0 w-[calc(100%-32px)] max-w-[468px] py-3 rounded-lg bg-grey900 text-white text-md mt-56 mb-9 ${
-          buttonDisabled && "bg-grey200 text-white"
+        className={`fixed bottom-0 w-[calc(100%-32px)] max-w-[468px] py-3 rounded-lg text-md text-white mb-9 ${
+          buttonDisabled ? "bg-grey200" : "bg-grey900"
         }`}
       >
         저장
       </button>
+      {bottomDrawerOpen && (
+        <div className="fixed left-0 bg-black bg-opacity-50 h-full w-full" />
+      )}
+      <div
+        className="bg-white w-full max-w-max-size bottom-0 absolute left-1/2 -translate-x-1/2 px-20 rounded-t-3xl space-y-7 overflow-hidden"
+        style={bottomDrawerStyle}
+        ref={bottomDrawerRef}
+      >
+        <h1 className="text-blue1 text-lg text-center font-semibold mt-6">
+          카테고리
+        </h1>
+        <ul className="grid grid-cols-2 gap-5 mb-11">
+          {categories.map((category) => (
+            <li
+              key={category}
+              className={`flex-1 text-center ${
+                category === data.category && "text-blue1"
+              }`}
+            >
+              <button onClick={() => onSelectCategory(category)}>
+                {category}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </main>
   );
 }
