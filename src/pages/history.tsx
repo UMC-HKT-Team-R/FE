@@ -1,8 +1,9 @@
 import InlineCalendar from "@/components/calendar/inline-calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/date";
 import food from "@/assets/food.png";
 import Card from "@/components/card";
+import { useNavigate } from "react-router-dom";
 
 const histories = [
   {
@@ -30,6 +31,12 @@ function History() {
     name: "",
   });
 
+  const navigate = useNavigate();
+
+  const onClickAddHistory = () => {
+    navigate("/add-menu");
+  };
+
   const onSelectedDate = (date: Date[] | null) => {
     setSelectedDate(date ? date[0] : new Date());
   };
@@ -47,6 +54,10 @@ function History() {
     setModal({ open: false, id: -1, name: "" });
   };
 
+  useEffect(() => {
+    setDate([]);
+  }, []);
+
   return (
     <main>
       <InlineCalendar selectedDate={date} onChange={onSelectedDate} />
@@ -61,7 +72,12 @@ function History() {
       <section className="mt-8 space-y-5">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">{formatDate(selectedDate)}</p>
-          <button className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full">+</button>
+          <button
+            onClick={onClickAddHistory}
+            className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full"
+          >
+            +
+          </button>
         </div>
         {histories.length > 0 ? (
           <div className="flex flex-col gap-3">
