@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./footer";
+import Header from "./header";
 
 function Layout() {
   const { pathname } = useLocation();
@@ -13,6 +14,7 @@ function Layout() {
 
   return (
     <>
+      <Header />
       <Outlet />
       {isFooterShow && <Footer />}
     </>

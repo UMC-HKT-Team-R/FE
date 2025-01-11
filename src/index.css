@@ -32,6 +32,7 @@ main {
   display: flex;
   font-family: "Prentendard", sans-serif;
   margin: 0 auto;
+  margin-top: 68px;
   height: 100%;
   min-width: 360px;
   max-width: 500px;
