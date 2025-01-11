@@ -6,6 +6,7 @@ import Recommend from "./pages/recommend";
 import Post from "./pages/post";
 import History from "./pages/history";
 import Mypage from "./pages/mypage";
+import AddMenu from "./pages/add-menu";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/post" element={<Post />} />
         <Route path="/history" element={<History />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/add-menu" element={<AddMenu />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
