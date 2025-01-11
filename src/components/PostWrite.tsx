@@ -80,7 +80,7 @@ function PostWrite() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center mt-auto mb-[44px]">
+          <div className="flex flex-col items-center fixed bottom-14">
             <label className="flex gap-[8px] items-center justify-center w-[122px] h-[38px] bg-[#000] rounded-[8px] text-[#FFF] font-pretendard text-[15px] font-semibold leading-[20px] cursor-pointer">
               <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               <svg

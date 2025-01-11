@@ -1,49 +1,48 @@
 import React, { useEffect, useState } from "react";
 
 interface InfoItem {
+  postId: number;
   title: string;
   date: string;
-  image: string;
+  image_url: string;
 }
 
-const InfoGrid: React.FC = () => {
-  const [infoItems, setInfoItems] = useState<InfoItem[]>([]); // 상태로 데이터 관리
-  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태
-  const [error, setError] = useState<string | null>(null); // 에러 상태
+const InfoGrid: React.FC<{ onPostClick: (postId: number) => void }> = ({ onPostClick }) => {
+  const [infoItems, setInfoItems] = useState<InfoItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // API 호출 함수
   const fetchInfoItems = async () => {
     try {
-      const response = await fetch("/api/info-items"); // API 엔드포인트
+      const response = await fetch("/api/info-items");
       if (!response.ok) {
         throw new Error("데이터를 불러오는 데 실패했습니다.");
       }
-      const data: InfoItem[] = await response.json(); // JSON 형식으로 데이터 파싱
-      setInfoItems(data); // 상태 업데이트
+      const data = await response.json();
+      setInfoItems(data.data.posts);
     } catch (err) {
-      setError((err as Error).message); // 에러 상태 업데이트
+      setError((err as Error).message);
     } finally {
-      setIsLoading(false); // 로딩 상태 종료
+      setIsLoading(false);
     }
   };
 
-  // 컴포넌트 마운트 시 API 호출
   useEffect(() => {
     fetchInfoItems();
   }, []);
 
   return (
-    <div>
-      {/* 로딩 상태 처리 */}
-      {isLoading && <p>로딩 중...</p>}
-      {/* 에러 처리 */}
-      {error && <p className="text-red-500">{error}</p>}
-
-      {/* 데이터 표시 */}
+    <div className="min-h-[300px]">
+      {isLoading && <p className="text-center mt-4">로딩 중...</p>}
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
       <div className="grid grid-cols-2 gap-4">
-        {infoItems.map((item, index) => (
-          <div key={index} className="rounded-lg overflow-hidden border shadow-md bg-white">
-            <img src={item.image} alt={item.title} className="w-full h-24 object-cover" />
+        {infoItems.map((item) => (
+          <div
+            key={item.postId}
+            className="rounded-lg overflow-hidden border shadow-md bg-white cursor-pointer"
+            onClick={() => onPostClick(item.postId)}
+          >
+            <img src={item.image_url} alt={item.title} className="w-full h-24 object-cover" />
             <div className="p-2">
               <h3 className="text-sm font-semibold">{item.title}</h3>
               <p className="text-xs text-gray-500">{item.date}</p>

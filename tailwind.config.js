@@ -39,7 +39,7 @@ export default {
       sm: "0.75rem",
       md: "0.9375rem",
       lg: "1.125rem",
-      xl: "1.375rem",
+      xl: "1.625rem",
     },
   },
   plugins: [],
