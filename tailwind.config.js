@@ -7,6 +7,7 @@ export default {
     extend: {},
     fontFamily: {
       pretendard: ["Pretendard", ...defaultTheme.fontFamily.sans],
+      hsBombaram: ["HSBombaram", ...defaultTheme.fontFamily.sans],
     },
   },
   plugins: [],
