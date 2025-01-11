@@ -1,11 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import banner1 from "../assets/banner1.png";
 import banner2 from "../assets/banner2.png";
 import banner3 from "../assets/banner3.png";
 import sampleImage from "../assets/banner2.png";
 import FloatingWriteButton from "@/components/FloatingWriteButton";
 
+
 function Post() {
+  const navigate = useNavigate();
+
+  const handleWriteClick = () => {
+    navigate("/post-write");
+  };
+
   const banners = [
     {
       image: banner1,
@@ -207,7 +215,7 @@ function Post() {
           </div>
         ))}
       </div>
-      <FloatingWriteButton />
+      <FloatingWriteButton onClick={handleWriteClick} />
     </div>
   );
 }

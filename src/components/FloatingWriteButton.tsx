@@ -1,10 +1,11 @@
-function FloatingWriteButton() {
+function FloatingWriteButton({ onClick }: { onClick: () => void }) {
   return (
     <button
-      className="fixed bottom-[90px] font-semibold text-[#fff]	font-[15px] font-pretendard left-1/2 transform -translate-x-1/2 w-[108px] h-[38px] rounded-[8px] bg-[#000] flex items-center justify-center gap-[9px] z-50"
+      className="fixed bottom-[90px] left-1/2 transform -translate-x-1/2 w-[108px] h-[38px] rounded-[8px] bg-[#000] flex items-center justify-center gap-[9px] z-50 shadow-lg text-white font-pretendard font-semibold text-[15px]"
       style={{
         lineHeight: "20px",
       }}
+      onClick={onClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
