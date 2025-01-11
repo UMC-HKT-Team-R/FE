@@ -8,7 +8,7 @@ import Recommend from "./pages/recommend";
 import Post from "./pages/post";
 import History from "./pages/history";
 import Mypage from "./pages/mypage";
-import PostDetail from "./components/postDetail";
+import PostDetail from "./components/PostDetail";
 import PostWrite from "./components/PostWrite";
 import AddMenu from "./pages/add-menu";
 import Callback from "./pages/callback";
