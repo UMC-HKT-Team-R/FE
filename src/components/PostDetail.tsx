@@ -136,7 +136,7 @@ function PostDetail() {
           <img
             src={sample}
             alt="게시글 이미지"
-            className="w-full h-[328px] rounded-[6px] mb-[20px]"
+            className="w-full aspect-square rounded-[6px] mb-[20px] object-cover"
           />
         ) : (
           <div className="w-full h-[328px] flex items-center justify-center bg-[#F3F4F8] rounded-[6px] mb-[20px]">
@@ -146,47 +146,45 @@ function PostDetail() {
           </div>
         )}
 
-        <div className="w-full h-[12px] bg-[#F3F4F8] mb-[20px]"></div>
+        <div className="w-full h-[12px] bg-[#F3F4F8] mb-5"></div>
 
         {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment.id}>
-              <div className="flex mb-[6px]">
-                <img
-                  src={logo}
-                  alt="프로필"
-                  className="w-[40px] h-[40px] rounded-full flex-shrink-0"
-                />
-                <div className="ml-4 flex-1">
-                  <div className="flex justify-between">
+          <div className="flex flex-col gap-5">
+            {comments.map((comment) => (
+              <div key={comment.date} className="flex flex-col gap-2 border-b border-grey100 pb-5">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2 items-center">
+                    <img src={logo} alt="프로필" className="w-10 h-10 rounded-full flex-shrink-0" />
                     <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
                       {comment.username}
                     </span>
-                    <button onClick={() => handleDeleteComment(comment.id)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                      >
-                        <path
-                          d="M21 7L7 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M7 7L21 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
                   </div>
+                  <button onClick={() => handleDeleteComment(comment.id)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                    >
+                      <path
+                        d="M21 7L7 21"
+                        stroke="#D2D4DA"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M7 7L21 21"
+                        stroke="#D2D4DA"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex-1">
                   <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
                     {comment.content}
                   </p>
@@ -195,8 +193,8 @@ function PostDetail() {
                   </div>
                 </div>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-[200px]">
             <svg
@@ -250,7 +248,7 @@ function PostDetail() {
         </div>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div
             style={{
               width: "328px",

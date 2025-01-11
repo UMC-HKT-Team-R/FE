@@ -70,7 +70,8 @@ const Recommend = () => {
     <main className="flex justify-center items-center font-hsBombaram text-xl">야식 추천 중!</main>
   ) : isError ? (
     <main className="flex justify-center items-center font-hsBombaram text-xl">
-      메뉴 추천 중 에러가 발생했어요 :(
+      메뉴 추천 중<br />
+      에러가 발생했어요 :(
     </main>
   ) : (
     <main className="overflow-x-hidden overflow-hidden flex flex-col">
@@ -118,7 +119,7 @@ const Recommend = () => {
           ))}
         </ul>
         <button
-          className="flex gap-2 text-md font-semibold py-2.5 px-4 bg-grey800 text-white w-max items-center rounded-lg mx-auto"
+          className="flex gap-2 text-md font-semibold py-2 px-4 bg-grey800 text-white w-max items-center rounded-lg mx-auto"
           onClick={onClickReset}
         >
           <Rollback color="white" />
