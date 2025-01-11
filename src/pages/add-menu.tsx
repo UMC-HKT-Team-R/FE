@@ -3,7 +3,7 @@ import { FOOD_TYPE } from "@/constants/food-type";
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Photo from "@/assets/photo.svg?react";
-import Calendar from "@/components/calendar";
+import PopupCalendar from "@/components/calendar/popup-calendar";
 import { formatDate } from "@/utils/date";
 import useOutsideClick from "@/hooks/use-outside-click";
 
@@ -15,16 +15,7 @@ interface Data {
   photo: string;
 }
 
-const categories = [
-  "한식",
-  "중식",
-  "일식",
-  "양식",
-  "아시안",
-  "패스트푸드",
-  "카페",
-  "고기",
-];
+const categories = ["한식", "중식", "일식", "양식", "아시안", "패스트푸드", "카페", "고기"];
 
 const DEFAULT_VALUE = {
   date: null,
@@ -41,19 +32,14 @@ function AddMenu() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
 
-  const [calendarRef] = useOutsideClick<HTMLDivElement>(() =>
-    setCalendarOpen(false)
-  );
-  const [bottomDrawerRef] = useOutsideClick<HTMLDivElement>(() =>
-    setBottomDrawerOpen(false)
-  );
+  const [calendarRef] = useOutsideClick<HTMLDivElement>(() => setCalendarOpen(false));
+  const [bottomDrawerRef] = useOutsideClick<HTMLDivElement>(() => setBottomDrawerOpen(false));
 
   const navigate = useNavigate();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const buttonDisabled =
-    !data.date || !data.category || !data.type || !data.content;
+  const buttonDisabled = !data.date || !data.category || !data.type || !data.content;
 
   const bottomDrawerStyle = {
     transition: "height 0.3s",
@@ -142,7 +128,7 @@ function AddMenu() {
           </button>
           {calendarOpen && (
             <div ref={calendarRef} className="border border-black">
-              <Calendar
+              <PopupCalendar
                 selectedDate={data.date ? new Date(data.date) : new Date()}
                 onChange={onSelectDate}
               />
@@ -191,9 +177,7 @@ function AddMenu() {
               onChange={onChange}
               maxLength={14}
             />
-            <span className="text-sm text-grey300">
-              {data.content.length} / 14
-            </span>
+            <span className="text-sm text-grey300">{data.content.length} / 14</span>
           </div>
         </div>
         <div className="flex gap-[50px]">
@@ -205,28 +189,16 @@ function AddMenu() {
                 alt="Preview"
                 className="w-full aspect-square rounded-lg object-cover"
               />
-              <button
-                className="self-end underline underline-offset-4"
-                onClick={onPhotoUpload}
-              >
+              <button className="self-end underline underline-offset-4" onClick={onPhotoUpload}>
                 다시 선택
               </button>
             </div>
           ) : (
-            <button
-              onClick={onPhotoUpload}
-              className="flex p-10 rounded-lg bg-grey100"
-            >
+            <button onClick={onPhotoUpload} className="flex p-10 rounded-lg bg-grey100">
               <Photo />
             </button>
           )}
-          <input
-            type="file"
-            hidden
-            ref={inputRef}
-            accept="image/*"
-            onChange={onUploadPhoto}
-          />
+          <input type="file" hidden ref={inputRef} accept="image/*" onChange={onUploadPhoto} />
         </div>
       </section>
       <button
@@ -237,28 +209,20 @@ function AddMenu() {
       >
         저장
       </button>
-      {bottomDrawerOpen && (
-        <div className="fixed left-0 bg-black bg-opacity-50 h-full w-full" />
-      )}
+      {bottomDrawerOpen && <div className="fixed left-0 bg-black bg-opacity-50 h-full w-full" />}
       <div
         className="bg-white w-full max-w-max-size bottom-0 fixed left-1/2 -translate-x-1/2 px-20 rounded-t-3xl space-y-7 overflow-hidden"
         style={bottomDrawerStyle}
         ref={bottomDrawerRef}
       >
-        <h1 className="text-blue1 text-lg text-center font-semibold mt-6">
-          카테고리
-        </h1>
+        <h1 className="text-blue1 text-lg text-center font-semibold mt-6">카테고리</h1>
         <ul className="grid grid-cols-2 gap-5 mb-11">
           {categories.map((category) => (
             <li
               key={category}
-              className={`flex-1 text-center ${
-                category === data.category && "text-blue1"
-              }`}
+              className={`flex-1 text-center ${category === data.category && "text-blue1"}`}
             >
-              <button onClick={() => onSelectCategory(category)}>
-                {category}
-              </button>
+              <button onClick={() => onSelectCategory(category)}>{category}</button>
             </li>
           ))}
         </ul>
