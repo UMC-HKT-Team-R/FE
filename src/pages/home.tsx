@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import InfoGrid from "../components/InfoGrid";
 import WhiteRankingList from "../components/WhiteRankingList";
 import BlackRankingList from "../components/BlackRankingList";

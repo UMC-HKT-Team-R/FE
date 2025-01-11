@@ -100,10 +100,10 @@ function PostDetail() {
     }
   };
 
-  const handleDeleteComment = (id: number) => {
-    setSelectedCommentId(id);
-    setIsModalOpen(true);
-  };
+  // const handleDeleteComment = (id: number) => {
+  //   setSelectedCommentId(id);
+  //   setIsModalOpen(true);
+  // };
 
   const handlePostDelete = () => {
     setIsPostModalOpen(true);
