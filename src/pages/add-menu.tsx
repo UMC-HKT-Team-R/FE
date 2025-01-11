@@ -3,7 +3,7 @@ import { FOOD_TYPE } from "@/constants/food-type";
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Photo from "@/assets/photo.svg?react";
-import Calendar from "@/components/calendar";
+import PopupCalendar from "@/components/calendar/popup-calendar";
 import { formatDate } from "@/utils/date";
 import useOutsideClick from "@/hooks/use-outside-click";
 
@@ -123,7 +123,7 @@ function AddMenu() {
   };
 
   return (
-    <main>
+    <main className="pt-1.5">
       <header className="py-6 px-4 top-0 fixed bg-white z-10 w-full">
         <button onClick={onGoBack}>
           <ArrowLeft />
@@ -142,7 +142,7 @@ function AddMenu() {
           </button>
           {calendarOpen && (
             <div ref={calendarRef} className="border border-black">
-              <Calendar
+              <PopupCalendar
                 selectedDate={data.date ? new Date(data.date) : new Date()}
                 onChange={onSelectDate}
               />
