@@ -20,7 +20,7 @@ const WhiteRankingList = () => {
         {/* 타이틀과 날짜 */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold font-pretendard">백색 야식 랭킹</h2>
-          <span className="text-sm font-bold text-black">25. 01. 11.</span>
+          <span className="text-md font-bold text-black">25. 01. 11.</span>
         </div>
         {items.map((item) => (
           <li key={item.id} className="flex items-center">
@@ -28,19 +28,15 @@ const WhiteRankingList = () => {
             <div className="text-xl font-hsBombaram w-8 text-center mr-2">{item.id}</div>
 
             {/* 이미지 */}
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-10 h-10 rounded-full mr-4"
-            />
+            <img src={item.image} alt={item.name} className="w-10 h-10 rounded-full mr-4" />
 
             {/* 이름 */}
             <div className="flex-1">
-              <p className="text-md font-pretendard text-md">{item.name}</p>
+              <p className="font-pretendard text-lg">{item.name}</p>
             </div>
 
             {/* 참여 인원 */}
-            <div className="text-md font-pretendard text-black">{item.count} 명</div>
+            <div className="text-lg font-pretendard text-black">{item.count} 명</div>
           </li>
         ))}
       </ul>
@@ -49,5 +45,3 @@ const WhiteRankingList = () => {
 };
 
 export default WhiteRankingList;
-
-

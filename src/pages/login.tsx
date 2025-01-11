@@ -8,7 +8,9 @@ function Login() {
   const { login } = useAuth();
 
   const handleKakaoLogin = () => {
-    // 카카오 로그인 로직 추가
+    const link =
+      "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=8943f39e2168778d67d5cf0b2e85055c&redirect_uri=http://localhost:5173/callback";
+    window.location.href = link;
     login();
     navigate("/");
   };
@@ -20,11 +22,7 @@ function Login() {
   return (
     <div className="flex flex-col items-center pt-[228px]  min-h-screen px-[20px] bg-[#101123]">
       <div className="flex flex-col items-center">
-        <img
-          src={mainlogo}
-          alt="흑백야식가 로고"
-          className="w-[120px] h-[120px]"
-        />
+        <img src={mainlogo} alt="흑백야식가 로고" className="w-[120px] h-[120px]" />
         <div className="mt-[28px] text-[#fff] tracking-wider text-[50px] font-bold  font-hsBombaram">
           흑백야식가
         </div>
@@ -36,11 +34,7 @@ function Login() {
           onClick={handleKakaoLogin}
         >
           <span className="mr-[8px]">
-            <img
-              src={kakaologin}
-              alt="카카오아이콘"
-              className="w-[18px] h-[18px]"
-            />
+            <img src={kakaologin} alt="카카오아이콘" className="w-[18px] h-[18px]" />
           </span>
           <span className="text-grey1000 font-pretendard text-md leading-[20px]">
             카카오로 로그인
