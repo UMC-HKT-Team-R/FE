@@ -123,8 +123,8 @@ function AddMenu() {
   };
 
   return (
-    <main>
-      <header className="py-6 px-4">
+    <main className="pt-[73.5px]">
+      <header className="py-6 px-4 top-0 fixed bg-white z-10 w-full">
         <button onClick={onGoBack}>
           <ArrowLeft />
         </button>
