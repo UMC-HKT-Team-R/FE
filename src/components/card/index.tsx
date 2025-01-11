@@ -10,14 +10,7 @@ interface CardProps {
   onClickDelete: (id: number, name: string) => void;
 }
 
-function Card({
-  id,
-  src,
-  name,
-  category,
-  type = "WHITE",
-  onClickDelete,
-}: CardProps) {
+function Card({ id, src, name, category, type = "WHITE", onClickDelete }: CardProps) {
   const isBlack = type === "BLACK";
 
   return (
@@ -33,10 +26,7 @@ function Card({
           <p>{category}</p>
         </div>
       </div>
-      <button
-        className="justify-self-end"
-        onClick={() => onClickDelete(id, name)}
-      >
+      <button className="justify-self-end" onClick={() => onClickDelete(id, name)}>
         <Trash />
       </button>
     </div>

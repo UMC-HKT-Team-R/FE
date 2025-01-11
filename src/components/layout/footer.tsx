@@ -23,9 +23,7 @@ function Footer() {
           {navItems.map((item) => (
             <Link to={item.path} key={item.name}>
               <li className="flex flex-col items-center gap-2">
-                <item.icon
-                  color={pathname === item.path ? "#000000" : "#D3D4DA"}
-                />
+                <item.icon color={pathname === item.path ? "#000000" : "#D3D4DA"} />
                 {item.name}
               </li>
             </Link>

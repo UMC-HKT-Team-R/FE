@@ -51,22 +51,15 @@ const PopupCalendar = ({ selectedDate, onChange }: CalendarProps) => {
               {date.getFullYear()}년 {date.getMonth() + 1}월
             </span>
             <div className="flex gap-6">
-              <button
-                onClick={decreaseMonth}
-                disabled={prevMonthButtonDisabled}
-              >
-                <ArrowLeft
-                  color={prevMonthButtonDisabled ? "#B3B5BD" : "#262626"}
-                />
+              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                <ArrowLeft color={prevMonthButtonDisabled ? "#B3B5BD" : "#262626"} />
               </button>
               <button
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
                 className="rotate-180"
               >
-                <ArrowLeft
-                  color={nextMonthButtonDisabled ? "#B3B5BD" : "#262626"}
-                />
+                <ArrowLeft color={nextMonthButtonDisabled ? "#B3B5BD" : "#262626"} />
               </button>
             </div>
           </div>

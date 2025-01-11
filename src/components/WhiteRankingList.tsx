@@ -28,11 +28,7 @@ const WhiteRankingList = () => {
             <div className="text-xl font-hsBombaram w-8 text-center">{item.id}</div>
 
             {/* 이미지 */}
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-10 h-10 rounded-full mr-4"
-            />
+            <img src={item.image} alt={item.name} className="w-10 h-10 rounded-full mr-4" />
 
             {/* 이름 */}
             <div className="flex-1">
@@ -49,5 +45,3 @@ const WhiteRankingList = () => {
 };
 
 export default WhiteRankingList;
-
-

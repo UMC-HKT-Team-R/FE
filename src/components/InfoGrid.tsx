@@ -36,22 +36,15 @@ const InfoGrid: React.FC = () => {
     <div>
       {/* 로딩 상태 처리 */}
       {isLoading && <p>로딩 중...</p>}
-      
+
       {/* 에러 처리 */}
       {error && <p className="text-red-500">{error}</p>}
-      
+
       {/* 데이터 표시 */}
       <div className="grid grid-cols-2 gap-4">
         {infoItems.map((item, index) => (
-          <div
-            key={index}
-            className="rounded-lg overflow-hidden border shadow-md bg-white"
-          >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-24 object-cover"
-            />
+          <div key={index} className="rounded-lg overflow-hidden border shadow-md bg-white">
+            <img src={item.image} alt={item.title} className="w-full h-24 object-cover" />
             <div className="p-2">
               <h3 className="text-sm font-semibold">{item.title}</h3>
               <p className="text-xs text-gray-500">{item.date}</p>

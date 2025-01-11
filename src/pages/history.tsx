@@ -61,9 +61,7 @@ function History() {
       <section className="mt-8 space-y-5">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">{formatDate(selectedDate)}</p>
-          <button className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full">
-            +
-          </button>
+          <button className="text-xl bg-yellow1 text-white w-8 h-8 rounded-full">+</button>
         </div>
         {histories.length > 0 ? (
           <div className="flex flex-col gap-3">
@@ -83,16 +81,11 @@ function History() {
         <section className="fixed flex justify-center items-center left-0 top-0 bg-black bg-opacity-50 w-full h-full z-20">
           <div className="bg-white pt-9 pb-3 px-4 rounded-lg space-y-8">
             <div className="space-y-1 text-center">
-              <p className="text-xl text-error font-semibold">
-                연어 아보카도 포케
-              </p>
+              <p className="text-xl text-error font-semibold">연어 아보카도 포케</p>
               <p className="font-medium text-md">야식 기록을 삭제할까요?</p>
             </div>
             <div className="flex font-medium text-md gap-2">
-              <button
-                className="min-w-36 flex-1 rounded-lg py-2 bg-grey100"
-                onClick={onCloseModal}
-              >
+              <button className="min-w-36 flex-1 rounded-lg py-2 bg-grey100" onClick={onCloseModal}>
                 취소
               </button>
               <button

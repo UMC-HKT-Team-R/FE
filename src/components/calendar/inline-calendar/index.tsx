@@ -49,9 +49,7 @@ const InlineCalendar = ({ selectedDate, onChange }: CalendarProps) => {
         }: CustomHeaderProps) => (
           <div className="flex justify-between">
             <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              <ArrowLeft
-                color={prevMonthButtonDisabled ? "#B3B5BD" : "#262626"}
-              />
+              <ArrowLeft color={prevMonthButtonDisabled ? "#B3B5BD" : "#262626"} />
             </button>
             <span className="font-semibold text-xl">
               {date.getFullYear()}년 {date.getMonth() + 1}월
@@ -62,9 +60,7 @@ const InlineCalendar = ({ selectedDate, onChange }: CalendarProps) => {
                 disabled={nextMonthButtonDisabled}
                 className="rotate-180"
               >
-                <ArrowLeft
-                  color={nextMonthButtonDisabled ? "#B3B5BD" : "#262626"}
-                />
+                <ArrowLeft color={nextMonthButtonDisabled ? "#B3B5BD" : "#262626"} />
               </button>
             </div>
           </div>
