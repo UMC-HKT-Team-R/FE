@@ -117,7 +117,7 @@ function Post() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen ">
       <main
         className="relative w-full h-32 overflow-hidden flex-shrink-0"
         onMouseDown={handleDragStart}
