@@ -1,7 +1,7 @@
 import ArrowLeft from "@/assets/arrow-left.svg?react";
 import { FOOD_TYPE } from "@/constants/food-type";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Photo from "@/assets/photo.svg?react";
 import Calendar from "@/components/calendar";
 import { formatDate } from "@/utils/date";
@@ -35,7 +35,9 @@ const DEFAULT_VALUE = {
 };
 
 function AddMenu() {
-  const [data, setData] = useState<Data>(DEFAULT_VALUE);
+  const { state } = useLocation();
+
+  const [data, setData] = useState<Data>(state || DEFAULT_VALUE);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
 
@@ -53,7 +55,6 @@ function AddMenu() {
   const buttonDisabled =
     !data.date || !data.category || !data.type || !data.content;
 
-  console.log(buttonDisabled);
   const bottomDrawerStyle = {
     transition: "height 0.3s",
     height: bottomDrawerOpen ? "264px" : "0",
@@ -122,7 +123,7 @@ function AddMenu() {
   };
 
   return (
-    <main className="overflow-hidden">
+    <main>
       <header className="py-6 px-4">
         <button onClick={onGoBack}>
           <ArrowLeft />
@@ -240,7 +241,7 @@ function AddMenu() {
         <div className="fixed left-0 bg-black bg-opacity-50 h-full w-full" />
       )}
       <div
-        className="bg-white w-full max-w-max-size bottom-0 absolute left-1/2 -translate-x-1/2 px-20 rounded-t-3xl space-y-7 overflow-hidden"
+        className="bg-white w-full max-w-max-size bottom-0 fixed left-1/2 -translate-x-1/2 px-20 rounded-t-3xl space-y-7 overflow-hidden"
         style={bottomDrawerStyle}
         ref={bottomDrawerRef}
       >
