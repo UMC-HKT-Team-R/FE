@@ -57,10 +57,6 @@ function Mypage() {
     categories: number;
   } | null>(null);
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-
   const fetchMypageData = async () => {
     try {
       const [mypageResponse, snackResponse] = await Promise.all([
@@ -109,6 +105,18 @@ function Mypage() {
 
   const { type, image } = getGourmetInfo(categories);
 
+  const data = {
+    labels: ["아시안", "패스트푸드", "아시안"],
+    datasets: [
+      {
+        data: [5, 3, categories],
+        backgroundColor: ["#FF6347", "#FFCD00", "#4CAF50", "#404252", "#EAF0FF"],
+        borderColor: "#fff",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <main className="overflow-y-auto">
       <div className="flex gap-4 items-center">
@@ -117,7 +125,7 @@ function Mypage() {
           <div className="gap-2">
             <div className="flex justify-between">
               <p className="text-lg font-semibold">{nickname}</p>
-              <button type="button" className="font-lg text-error underline">
+              <button type="button" className="font-lg text-error underline" onClick={handleClick}>
                 로그아웃
               </button>
             </div>
