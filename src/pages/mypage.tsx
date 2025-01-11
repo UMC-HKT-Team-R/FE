@@ -7,6 +7,7 @@ import profile2 from "../assets/profile2.png";
 import profile3 from "../assets/profile3.png";
 import profile4 from "../assets/profile4.png";
 import profile5 from "../assets/profile.png";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -23,6 +24,8 @@ function Mypage() {
     email: string;
     categories: number;
   } | null>(null);
+
+  const navigate = useNavigate();
 
   const fetchMypageData = async () => {
     try {
@@ -62,6 +65,7 @@ function Mypage() {
   const { type, image } = getGourmetInfo(categories);
 
 
+
   const data = {
     labels: ["아시안", "패스트푸드", "아시안"], 
     datasets: [
@@ -74,6 +78,11 @@ function Mypage() {
     ],
   };
 
+  const handleClick = () => {
+    localStorage.removeItem("accessToken");
+    navigate('/login')
+  }
+
   return (
     <main className="overflow-y-auto">
       <div className="flex gap-4 items-center">
@@ -82,7 +91,7 @@ function Mypage() {
           <div className="gap-2">
             <div className="flex justify-between">
               <p className="text-lg font-semibold">{nickname}</p>
-              <button type="button" className="font-lg text-error underline">
+              <button type="button" className="font-lg text-error underline" onClick={handleClick}>
                 로그아웃
               </button>
             </div>
