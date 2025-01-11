@@ -1,17 +1,19 @@
 import Trash from "@/assets/trash.svg?react";
-import { FoodType } from "@/constants/food-type";
+import { HistoryProps } from "@/pages/history";
 
-interface CardProps {
-  id: number;
-  src: string;
-  name: string;
-  category: string;
-  type?: FoodType;
-  onClickDelete: (id: number, name: string) => void;
+interface CardProps extends HistoryProps {
+  onClickDelete: (calendarId: number, detailFood: string) => void;
 }
 
-function Card({ id, src, name, category, type = "WHITE", onClickDelete }: CardProps) {
-  const isBlack = type === "BLACK";
+function Card({
+  calendarId,
+  imageUrl,
+  detailFood,
+  category,
+  color = "WHITE",
+  onClickDelete,
+}: CardProps) {
+  const isBlack = color === "BLACK";
 
   return (
     <div
@@ -20,13 +22,13 @@ function Card({ id, src, name, category, type = "WHITE", onClickDelete }: CardPr
       }`}
     >
       <div className="flex gap-3 items-center">
-        <img src={src} alt="음식 사진" width={60} height={60} />
+        <img src={imageUrl} alt="음식 사진" width={60} height={60} />
         <div className="flex flex-col gap-1 justify-center truncate mr-4">
-          <p className="truncate font-semibold">{name}</p>
+          <p className="truncate font-semibold">{detailFood}</p>
           <p>{category}</p>
         </div>
       </div>
-      <button className="justify-self-end" onClick={() => onClickDelete(id, name)}>
+      <button className="justify-self-end" onClick={() => onClickDelete(calendarId, detailFood)}>
         <Trash />
       </button>
     </div>

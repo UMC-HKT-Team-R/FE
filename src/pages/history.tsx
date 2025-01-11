@@ -1,30 +1,23 @@
 import InlineCalendar from "@/components/calendar/inline-calendar";
 import { useEffect, useState } from "react";
-import { formatDate } from "@/utils/date";
-import food from "@/assets/food.png";
+import { formatDashDate, formatDate } from "@/utils/date";
 import Card from "@/components/card";
 import { useNavigate } from "react-router-dom";
 import Add from "@/assets/add.svg?react";
+import { api } from "@/services/api";
+import { FoodType } from "@/constants/food-type";
 
-const histories = [
-  {
-    id: 1,
-    name: "연어 아보카도 포케",
-    category: "양식",
-    type: "WHITE" as const,
-    src: food,
-  },
-  {
-    id: 2,
-    name: "연어 아보카도 포케",
-    category: "양식",
-    type: "BLACK" as const,
-    src: food,
-  },
-];
+export interface HistoryProps {
+  calendarId: number;
+  imageUrl: string;
+  detailFood: string;
+  category: string;
+  color: FoodType;
+}
 
 function History() {
-  const [date, setDate] = useState<Date[] | null>(null);
+  const [data, setData] = useState<HistoryProps[]>([]);
+  const [isLoading, setIsLoaidng] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [modal, setModal] = useState({
     open: false,
@@ -46,22 +39,40 @@ function History() {
     setModal({ open: true, id, name });
   };
 
-  const onClickDelete = () => {
-    // 삭제 API 요청
-    onCloseModal();
+  const onClickDelete = async () => {
+    setIsLoaidng(true);
+    try {
+      await api.delete(`/api/calendar/${modal.id}`);
+      await fetchHistories();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoaidng(false);
+      onCloseModal();
+    }
   };
 
   const onCloseModal = () => {
     setModal({ open: false, id: -1, name: "" });
   };
 
+  const fetchHistories = async () => {
+    try {
+      const res = await api.get(`/api/calendar?date=${formatDashDate(selectedDate)}`);
+      console.log(res);
+      setData(res.data.result.calendarInfoDTOS);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    setDate([]);
-  }, []);
+    fetchHistories();
+  }, [selectedDate]);
 
   return (
     <main>
-      <InlineCalendar selectedDate={date} onChange={onSelectedDate} />
+      <InlineCalendar onChange={onSelectedDate} />
       <section className="flex items-center gap-2 text-md">
         <p className="border border-black flex-1 text-center py-2 rounded-lg">
           백색 야식 <span className="font-semibold">13일</span>
@@ -80,10 +91,10 @@ function History() {
             <Add />
           </button>
         </div>
-        {histories.length > 0 ? (
+        {data.length > 0 ? (
           <div className="flex flex-col gap-3 pb-24">
-            {histories.map((history) => (
-              <Card key={history.id} {...history} onClickDelete={onOpenModal} />
+            {data.map((item) => (
+              <Card key={item.calendarId} {...item} onClickDelete={onOpenModal} />
             ))}
           </div>
         ) : (
@@ -98,14 +109,19 @@ function History() {
         <section className="fixed flex justify-center items-center left-0 top-0 bg-black bg-opacity-50 w-full h-full z-20">
           <div className="bg-white pt-9 pb-3 px-4 rounded-lg space-y-8">
             <div className="space-y-1 text-center">
-              <p className="text-xl text-error font-semibold">연어 아보카도 포케</p>
+              <p className="text-xl text-error font-semibold">{modal.name}</p>
               <p className="font-medium text-md">야식 기록을 삭제할까요?</p>
             </div>
             <div className="flex font-medium text-md gap-2">
-              <button className="min-w-36 flex-1 rounded-lg py-2 bg-grey100" onClick={onCloseModal}>
+              <button
+                disabled={isLoading}
+                className="min-w-36 flex-1 rounded-lg py-2 bg-grey100"
+                onClick={onCloseModal}
+              >
                 취소
               </button>
               <button
+                disabled={isLoading}
                 className="min-w-36 flex-1 rounded-lg py-2 bg-error text-white"
                 onClick={onClickDelete}
               >

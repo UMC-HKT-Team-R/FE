@@ -1,6 +1,6 @@
 export const FOOD_TYPE = {
-  WHITE: "WHITE",
-  BLACK: "BLACK",
+  WHITE: "WHITE" as const,
+  BLACK: "BLACK" as const,
 };
 
 export type FoodType = keyof typeof FOOD_TYPE;

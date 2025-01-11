@@ -14,11 +14,10 @@ interface CustomHeaderProps {
 }
 
 interface CalendarProps {
-  selectedDate: Date[] | null;
   onChange: (dates: Date[] | null) => void;
 }
 
-const InlineCalendar = ({ selectedDate, onChange }: CalendarProps) => {
+const InlineCalendar = ({ onChange }: CalendarProps) => {
   const activeColor = () => {
     const outsideMonth = document.querySelectorAll<HTMLElement>(
       ".react-datepicker__day--outside-month"
@@ -32,7 +31,6 @@ const InlineCalendar = ({ selectedDate, onChange }: CalendarProps) => {
     <div className="inline-calendar">
       <DatePicker
         dateFormatCalendar="yyyy년"
-        selectedDates={selectedDate || []}
         onChange={onChange}
         startDate={new Date()}
         inline

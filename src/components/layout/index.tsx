@@ -5,7 +5,7 @@ import Header from "./header";
 function Layout() {
   const { pathname } = useLocation();
 
-  const isFooterShow =
+  const isLayoutShow =
     pathname === "/" ||
     pathname === "/recommend" ||
     pathname === "/post" ||
@@ -14,9 +14,9 @@ function Layout() {
 
   return (
     <>
-      <Header />
+      {isLayoutShow && <Header />}
       <Outlet />
-      {isFooterShow && <Footer />}
+      {isLayoutShow && <Footer />}
     </>
   );
 }

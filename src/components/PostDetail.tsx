@@ -19,6 +19,7 @@ function PostDetail() {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
   const [commentBody, setCommentBody] = useState<string>("");
+
   const [commentList, setCommentList] = useState<
     {
       id: number;
@@ -191,7 +192,7 @@ function PostDetail() {
           <img
             src={sample}
             alt="게시글 이미지"
-            className="w-full h-[328px] rounded-[6px] mb-[20px]"
+            className="w-full aspect-square rounded-[6px] mb-[20px] object-cover"
           />
         ) : (
           <div className="w-full h-[328px] flex items-center justify-center bg-[#F3F4F8] rounded-[6px] mb-[20px]">
@@ -201,36 +202,55 @@ function PostDetail() {
           </div>
         )}
 
-        <div className="w-full h-[12px] bg-[#F3F4F8] mb-[20px]"></div>
+        <div className="w-full h-[12px] bg-[#F3F4F8] mb-5"></div>
 
         {commentList.length > 0 ? (
-          commentList.map((comment) => (
-            <div key={comment.id} className="mb-6">
-              <div className="flex items-center mb-2">
-                <img
-                  src={comment.profile}
-                  alt="프로필"
-                  className="w-[28px]  h-[28px] rounded-full flex-shrink-0"
-                />
-                <div className="ml-2">
-                  <span className="text-[#000] font-pretendard  font-medium text-[15px] leading-[20px]">
-                    {comment.username}
-                  </span>
-                  <span className="text-[#777986] font-pretendard  text-[15px] font-medium leading-[20px] ml-1">
-                    · {comment.type}
-                  </span>
+          <div className="flex flex-col gap-5">
+            {commentList.map((comment) => (
+              <div key={comment.date} className="flex flex-col gap-2 border-b border-grey100 pb-5">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-2 items-center">
+                    <img src={logo} alt="프로필" className="w-10 h-10 rounded-full flex-shrink-0" />
+                    <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
+                      {comment.username}
+                    </span>
+                  </div>
+                  <button onClick={() => deleteComment(comment.id)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                    >
+                      <path
+                        d="M21 7L7 21"
+                        stroke="#D2D4DA"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M7 7L21 21"
+                        stroke="#D2D4DA"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex-1">
+                  <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
+                    {comment.content}
+                  </p>
+                  <div className="text-[#B3B5BC] font-pretendard text-[12px] leading-[16px] mt-[8px]">
+                    {comment.date}
+                  </div>
                 </div>
               </div>
-              <div>
-                <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mb-1">
-                  {comment.content}
-                </p>
-                <div className="text-[#B3B5BC] font-pretendard  text-[12px] leading-[16px]">
-                  {comment.date}
-                </div>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-[200px]">
             <svg
@@ -256,18 +276,13 @@ function PostDetail() {
       </div>
 
       <div className="fixed bottom-0 left-0 w-full bg-white p-4 border-t border-[#F3F4F8]">
-        <div className="flex py-[6px] items-center bg-[#F3F4F8] rounded-[8px] px-[12px]">
-          <textarea
-            ref={textAreaRef}
+        <div className="flex items-center bg-[#F3F4F8] rounded-[8px] px-[12px]">
+          <input
+            type="text"
             value={commentBody}
             placeholder="댓글을 작성해보세요."
             onChange={(e) => setCommentBody(e.target.value)}
-            className="flex-1 bg-transparent placeholder-[#B3B5BC] text-[#000] font-pretendard text-[15px] leading-[20px] outline-none resize-none"
-            style={{
-              maxHeight: "100px",
-              overflowY: "auto",
-            }}
-            rows={1}
+            className="flex-1 h-[32px] bg-transparent placeholder-[#B3B5BC] text-[#000] font-pretendard text-[15px] leading-[20px] outline-none"
           />
           <button className="ml-2" onClick={handleCommentSubmit}>
             <svg
@@ -289,7 +304,7 @@ function PostDetail() {
         </div>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div
             style={{
               width: "328px",

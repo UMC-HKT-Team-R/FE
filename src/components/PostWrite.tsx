@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "@/services/post"; 
+import { createPost } from "@/services/post";
 
 function PostWrite() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function PostWrite() {
       const response = await createPost({
         title,
         body,
-        image: selectedImage, 
+        image: selectedImage,
       });
 
       if (response.isSuccess) {
@@ -114,7 +114,7 @@ function PostWrite() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center fixed bottom-14">
+          <div className="flex flex-col items-center fixed bottom-[90px]">
             <label className="flex gap-[8px] items-center justify-center w-[122px] h-[38px] bg-[#000] rounded-[8px] text-[#FFF] font-pretendard text-[15px] font-semibold leading-[20px] cursor-pointer">
               <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               <svg
