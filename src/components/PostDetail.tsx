@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import sample from "../assets/banner1.png";
 import logo from "../assets/profile.png";
 import { deletePost } from "@/services/post";
+import { createComment, deleteComment } from "@/services/comment";
 
 const comments = [
   {
@@ -28,6 +29,24 @@ function PostDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState<number | null>(null);
+  const [commentBody, setCommentBody] = useState<string>("");
+
+  const handleCommentSubmit = async () => {
+    if (!commentBody.trim()) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+  
+    try {
+      const response = await createComment(Number(postId), { body: commentBody });
+      console.log("댓글 작성 성공:", response);
+      alert(response.message);
+      setCommentBody(""); 
+
+    } catch (error) {
+      alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   const handleDeleteComment = (id: number) => {
     setSelectedCommentId(id);
@@ -38,10 +57,23 @@ function PostDetail() {
     setIsPostModalOpen(true);
   };
 
-  const confirmDelete = () => {
-    console.log("Deleting comment with ID:", selectedCommentId);
-    setIsModalOpen(false);
+  const confirmDelete = async () => {
+    if (selectedCommentId === null) {
+      alert("삭제할 댓글을 선택해주세요.");
+      return;
+    }
+  
+    try {
+      const response = await deleteComment(selectedCommentId);
+      console.log("댓글 삭제 성공:", response);
+      alert(response.message);
+      setIsModalOpen(false);
+      setSelectedCommentId(null);
+    } catch (error) {
+      alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
   };
+  
 
   const confirmDeletePost = async () => {
     try {
@@ -118,7 +150,6 @@ function PostDetail() {
 
   <div className="w-full h-[12px] bg-[#F3F4F8] mb-[20px]"></div>
 
-  {/* 댓글 영역 */}
   {comments.length > 0 ? (
     comments.map((comment) => (
       <div key={comment.id}>
@@ -196,10 +227,13 @@ function PostDetail() {
         <div className="flex items-center bg-[#F3F4F8] rounded-[8px] px-[12px]">
           <input
             type="text"
+            value={commentBody}
             placeholder="댓글을 작성해보세요."
+            onChange={(e) => setCommentBody(e.target.value)}
+
             className="flex-1 h-[32px] bg-transparent placeholder-[#B3B5BC] text-[#000] font-pretendard text-[15px] leading-[20px] outline-none"
           />
-          <button className="ml-2">
+          <button className="ml-2" onClick={handleCommentSubmit}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
