@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
+import Footer from "./footer";
 
 function Layout() {
   return (
-    <div className="flex font-pretendard mx-auto h-full min-w-[360px] max-w-[500px] px-4 flex-col">
+    <div className="flex font-pretendard mx-auto h-full min-w-min-size max-w-max-size px-4 flex-col">
       <Outlet />
+      <Footer />
     </div>
   );
 }
