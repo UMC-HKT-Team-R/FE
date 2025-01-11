@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import sample from "../assets/banner1.png";
+import logo from "../assets/profile.png";
 
 const comments = [
   {
@@ -86,78 +87,78 @@ function PostDetail() {
           </div>
         </div>
 
-        <h1 className="text-[#000] font-pretendard font-semibold text-[18px] leading-[24px] mb-[12px]">
-          게시글 제목
-        </h1>
+  <h1 className="text-[#000] font-pretendard font-semibold text-[18px] leading-[24px] mb-[12px]">
+    게시글 제목
+  </h1>
 
-        <p className="text-[#000] font-pretendard text-[15px] leading-[20px] overflow-hidden text-ellipsis mb-[12px]">
-          게시글 내용
-        </p>
+  <p className="text-[#000] font-pretendard text-[15px] leading-[20px] overflow-hidden text-ellipsis mb-[12px]">
+    게시글 내용
+  </p>
 
-        <img
-          src={sample}
-          alt="게시글 이미지"
-          className="w-full h-[328px] rounded-[6px] mb-[20px]"
-        />
+  {sample ? (
+    <img
+      src={sample}
+      alt="게시글 이미지"
+      className="w-full h-[328px] rounded-[6px] mb-[20px]"
+    />
+  ) : (
+    <div className="w-full h-[328px] flex items-center justify-center bg-[#F3F4F8] rounded-[6px] mb-[20px]">
+      <span className="text-[#B3B5BC] font-pretendard text-[15px] leading-[20px]">
+        이미지가 없습니다.
+      </span>
+    </div>
+  )}
 
-        <div className="w-full h-[12px] bg-[#F3F4F8] mb-[20px]"></div>
+  <div className="w-full h-[12px] bg-[#F3F4F8] mb-[20px]"></div>
 
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment.id}>
-              <div className="flex mb-[6px]">
-                <img
-                  src={comment.profile}
-                  alt="프로필"
-                  className="w-[40px] h-[40px] rounded-full flex-shrink-0"
-                />
-                <div className="ml-4 flex-1">
-                  <div className="flex justify-between">
-                    <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
-                      {comment.username}
-                    </span>
-                    <button onClick={() => handleDeleteComment(comment.id)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                      >
-                        <path
-                          d="M21 7L7 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M7 7L21 21"
-                          stroke="#FF3E3E"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
-                    {comment.content}
-                  </p>
-                  <div className="text-[#B3B5BC] font-pretendard text-[12px] leading-[16px] mt-[8px]">
-                    {comment.date}
-                  </div>
-                </div>
-              </div>
+  {/* 댓글 영역 */}
+  {comments.length > 0 ? (
+    comments.map((comment) => (
+      <div key={comment.id}>
+        <div className="flex mb-[6px]">
+          <img
+            src={logo}
+            alt="프로필"
+            className="w-[40px] h-[40px] rounded-full flex-shrink-0"
+          />
+          <div className="ml-4 flex-1">
+            <div className="flex justify-between">
+              <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
+                {comment.username}
+              </span>
+              <button onClick={() => handleDeleteComment(comment.id)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                >
+                  <path
+                    d="M21 7L7 21"
+                    stroke="#FF3E3E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M7 7L21 21"
+                    stroke="#FF3E3E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
-          ))
-        ) : (
-          <div className="flex flex-col items-center">
-            <span className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[4px]">
-              첫 댓글을 남겨주세요.
-            </span>
+            <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
+              {comment.content}
+            </p>
+            <div className="text-[#B3B5BC] font-pretendard text-[12px] leading-[16px] mt-[8px]">
+              {comment.date}
+            </div>
           </div>
-        )}
+        </div>
       </div>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white p-4 border-t border-[#F3F4F8] max-w-max-size">
         <div className="flex items-center bg-[#F3F4F8] rounded-[8px] px-[12px]">
