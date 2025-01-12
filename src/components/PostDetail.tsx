@@ -25,6 +25,7 @@ function PostDetail() {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [commentBody, setCommentBody] = useState<string>("");
   const [isAuthor, setIsAuthor] = useState<boolean>(false); 
+  const [currentUserNickname, setCurrentUserNickname] = useState<string>("");
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -48,6 +49,7 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
         const mypageResponse: MypageResponse = await getMypageData();
         if (mypageResponse.isSuccess) {
           const currentMemberId = mypageResponse.result.memberId;
+          setCurrentUserNickname(mypageResponse.result.nickname); // 현재 로그인한 유저의 닉네임 저장
           setIsAuthor(postMemberId === currentMemberId); // 작성자인지 여부 확인
         }
       } catch (error) {
@@ -86,7 +88,7 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
           ...prev,
           {
             commentId: response.result.commentId,
-            nickname,
+            nickname: currentUserNickname,
             content: commentBody,
             date: formatDate(new Date().toISOString()),          },
         ]);
