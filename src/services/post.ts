@@ -38,6 +38,7 @@ export interface GetPostDetailResponse {
   result: {
     nickname: string;
     title: string;
+    date: string;
     body: string;
     imageUrl?: string;
     comments: Array<{
