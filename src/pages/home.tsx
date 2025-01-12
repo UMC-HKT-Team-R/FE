@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import InfoGrid from "../components/InfoGrid";
 import WhiteRankingList from "../components/WhiteRankingList";
@@ -8,6 +7,8 @@ import R4 from "../assets/Rectangle 4.svg";
 import R5 from "../assets/Rectangle 5.svg";
 import R6 from "../assets/Rectangle 6.svg";
 import R7 from "../assets/Rectangle 7.svg";
+import { api } from "@/services/api";
+import kakao from "@/assets/Kakao.svg";
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,7 +18,7 @@ function Home() {
 
   const posts: Record<number, { title: string; date: string; body: string; image: string }> = {
     1: {
-      title: "냉장고 파먹기! 남은 야식 처리법 5가지 추천",
+      title: `냉장고 파먹기! \n 남은 야식 처리법 5가지 추천`,
       date: "2025.01.11",
       body: `남은 야식을 처리하는 것은 냉장고 속 음식을 낭비하지 않고 활용하는 현명한 방법입니다. 오늘은 간단하면서도 맛있는 남은 야식 활용법 5가지를 소개하겠습니다.
 
@@ -45,7 +46,7 @@ function Home() {
       image: R4,
     },
     2: {
-      title: "서울 시내 24시간 심야 식당 소개 3선",
+      title: "서울 시내 \n 24시간 심야 식당 소개 3선",
       date: "2025.01.11",
       body: `서울은 잠들지 않는 도시로, 늦은 밤에도 맛있는 음식을 즐길 수 있는 곳이 많습니다. 오늘은 그중에서도 24시간 운영하며 심야 미식을 책임지는 서울의 대표적인 식당 3곳을 소개하겠습니다.
 
@@ -65,7 +66,7 @@ function Home() {
       image: R5,
     },
     3: {
-      title: "늦은 밤 부담없이 즐기는 대파 방울토마토 구이 레시피",
+      title: "늦은 밤 부담없이 즐기는\n 대파 방울토마토 구이 레시피",
       date: "2025.01.11",
       body: `늦은 밤 가볍게 즐길 수 있는 간단한 야식이 필요하다면, 대파와 방울토마토를 활용한 구이를 추천드립니다. 준비도 간단하고 맛과 건강까지 챙길 수 있는 이 레시피는 소박하지만 특별한 매력을 선사합니다. 지금부터 대파 방울토마토 구이를 만드는 방법을 소개하겠습니다.
 
@@ -181,12 +182,12 @@ function Home() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch("/api/user");
-        if (response.ok) {
-          const data = await response.json();
+        const response = await api.get("/mypage");
+        if (response.status === 200) {
           setIsLoggedIn(true);
-          setNickname(data.nickname);
-          setRatio(data.ratio);
+          setNickname(response.data.nickname);
+          setRatio(response.data.categories);
+          localStorage.setItem("memberId", response.data.memberId);
         } else {
           setIsLoggedIn(false);
         }
@@ -241,11 +242,7 @@ function Home() {
                     className="bg-yellow1 font-pretendard text-black w-full px-4 py-3 my-2 rounded-md flex items-center justify-center text-md"
                     onClick={() => (window.location.href = "/login")}
                   >
-                    <img
-                      src="/src/assets/Kakao.svg"
-                      alt="카카오"
-                      className="w-5 h-5 mr-2"
-                    />
+                    <img src={kakao} alt="카카오" className="w-5 h-5 mr-2" />
                     카카오로 로그인하기
                   </button>
                 </div>
@@ -260,7 +257,7 @@ function Home() {
               <BlackRankingList />
             </section>
 
-            <section >
+            <section>
               <h2 className="text-[28px] font-hsBombaram mb-0 pt-7">흑백 야식가를 위한</h2>
               <h2 className="text-[28px] font-hsBombaram mb-4">시크릿 야식 정보!</h2>
               <InfoGrid onPostClick={handlePostClick} />

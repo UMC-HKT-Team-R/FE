@@ -2,17 +2,10 @@ import Trash from "@/assets/trash.svg?react";
 import { HistoryProps } from "@/pages/history";
 
 interface CardProps extends HistoryProps {
-  onClickDelete: (calendarId: number, detailFood: string) => void;
+  onClickDelete: (foodId: number, foodName: string) => void;
 }
 
-function Card({
-  calendarId,
-  imageUrl,
-  detailFood,
-  category,
-  color = "WHITE",
-  onClickDelete,
-}: CardProps) {
+function Card({ foodId, imgUrl, foodName, category, color = "WHITE", onClickDelete }: CardProps) {
   const isBlack = color === "BLACK";
 
   return (
@@ -22,13 +15,13 @@ function Card({
       }`}
     >
       <div className="flex gap-3 items-center">
-        <img src={imageUrl} alt="음식 사진" width={60} height={60} />
+        <img src={imgUrl} alt="음식 사진" width={60} height={60} />
         <div className="flex flex-col gap-1 justify-center truncate mr-4">
-          <p className="truncate font-semibold">{detailFood}</p>
+          <p className="truncate font-semibold">{foodName}</p>
           <p>{category}</p>
         </div>
       </div>
-      <button className="justify-self-end" onClick={() => onClickDelete(calendarId, detailFood)}>
+      <button className="justify-self-end" onClick={() => onClickDelete(foodId, foodName)}>
         <Trash />
       </button>
     </div>
