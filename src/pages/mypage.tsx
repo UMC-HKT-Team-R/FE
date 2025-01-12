@@ -61,7 +61,7 @@ function Mypage() {
   const navigate = useNavigate();
   const today = new Date();
   const year = today.getFullYear();
-  const month = today.getMonth() + 1;main
+  const month = today.getMonth() + 1;
 
   const fetchMypageData = async () => {
     try {
@@ -113,8 +113,8 @@ function Mypage() {
 
   const handleClick = () => {
     localStorage.removeItem("accessToken");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   return (
     <main className="overflow-y-auto">
