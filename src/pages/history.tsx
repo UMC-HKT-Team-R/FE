@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import Add from "@/assets/add.svg?react";
 import { api } from "@/services/api";
 import { FoodType } from "@/constants/food-type";
+import { getCalendarByDate, getMontlyCalendar } from "@/services/calendar";
 
 export interface HistoryProps {
-  calendarId: number;
-  imageUrl: string;
-  detailFood: string;
+  foodId: number;
+  imgUrl: string;
+  foodName: string;
   category: string;
   color: FoodType;
 }
@@ -19,6 +20,11 @@ function History() {
   const [data, setData] = useState<HistoryProps[]>([]);
   const [isLoading, setIsLoaidng] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [monthlyData, setMontlyData] = useState({
+    blackCount: 0,
+    whiteCount: 0,
+    calendarInfoDTOS: [],
+  });
   const [modal, setModal] = useState({
     open: false,
     id: -1,
@@ -55,12 +61,20 @@ function History() {
   const onCloseModal = () => {
     setModal({ open: false, id: -1, name: "" });
   };
-
+  console.log(data);
   const fetchHistories = async () => {
     try {
-      const res = await api.get(`/api/calendar?date=${formatDashDate(selectedDate)}`);
-      console.log(res);
-      setData(res.data.result.calendarInfoDTOS);
+      const [dailyResponse, monthlyResponse] = await Promise.all([
+        getCalendarByDate(formatDashDate(selectedDate)),
+        getMontlyCalendar(selectedDate.getMonth() + 1, selectedDate.getFullYear()),
+      ]);
+      setData(dailyResponse.data.result);
+      setMontlyData({
+        ...monthlyResponse.data.result,
+        calendarInfoDTOS: monthlyResponse.data.result.calendarInfoDTOS.map(
+          ({ date }: { date: string }) => new Date(date)
+        ),
+      });
     } catch (error) {
       console.error(error);
     }
@@ -72,13 +86,13 @@ function History() {
 
   return (
     <main>
-      <InlineCalendar onChange={onSelectedDate} />
+      <InlineCalendar selectedDates={monthlyData.calendarInfoDTOS} onChange={onSelectedDate} />
       <section className="flex items-center gap-2 text-md">
         <p className="border border-black flex-1 text-center py-2 rounded-lg">
-          백색 야식 <span className="font-semibold">13일</span>
+          백색 야식 <span className="font-semibold">{monthlyData.whiteCount}일</span>
         </p>
         <p className="border border-black flex-1 text-center py-2 rounded-lg bg-black text-white">
-          흑색 야식 <span className="font-semibold">13일</span>
+          흑색 야식 <span className="font-semibold">{monthlyData.blackCount}일</span>
         </p>
       </section>
       <section className="mt-8 space-y-5">
@@ -94,7 +108,7 @@ function History() {
         {data.length > 0 ? (
           <div className="flex flex-col gap-3 pb-24">
             {data.map((item) => (
-              <Card key={item.calendarId} {...item} onClickDelete={onOpenModal} />
+              <Card key={item.foodId} {...item} onClickDelete={onOpenModal} />
             ))}
           </div>
         ) : (
