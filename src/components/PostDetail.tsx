@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import logo from "../assets/profile.png";
 import { getPostDetail, deletePost } from "@/services/post";
-import { createComment } from "@/services/comment";
+import { createComment, deleteComment } from "@/services/comment";
 import { getMypageData, MypageResponse } from "@/services/my";
 
 function PostDetail() {
@@ -24,7 +24,7 @@ function PostDetail() {
   >([]);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [commentBody, setCommentBody] = useState<string>("");
-  const [isAuthor, setIsAuthor] = useState<boolean>(false); 
+  const [isAuthor, setIsAuthor] = useState<boolean>(false);
   const [currentUserNickname, setCurrentUserNickname] = useState<string>("");
 
   useEffect(() => {
@@ -32,18 +32,25 @@ function PostDetail() {
       try {
         if (!postId) return;
         const response = await getPostDetail(Number(postId));
-const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments } =
-          response.result;
+        const {
+          memberId: postMemberId,
+          nickname,
+          date,
+          title,
+          body,
+          imageUrl,
+          comments,
+        } = response.result;
 
-        setDate(formatDate(date)); 
+        setDate(formatDate(date));
         setNickname(nickname);
         setTitle(title);
         setBody(body);
         setImageUrl(imageUrl);
-    
+
         const formattedComments = comments.map((comment) => ({
           ...comment,
-          date: formatDate(comment.date), 
+          date: formatDate(comment.date),
         }));
         setComments(formattedComments);
         const mypageResponse: MypageResponse = await getMypageData();
@@ -58,7 +65,6 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
         navigate(-1);
       }
     };
-    
 
     fetchPostDetail();
   }, [postId, navigate]);
@@ -72,8 +78,6 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
     const minutes = String(dateObj.getMinutes()).padStart(2, "0"); // 2자리 분
     return `${year}. ${month}. ${day}. ${hours}:${minutes}`;
   };
-
-  
 
   const handleCommentSubmit = async () => {
     if (!commentBody.trim()) {
@@ -90,7 +94,8 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
             commentId: response.result.commentId,
             nickname: currentUserNickname,
             content: commentBody,
-            date: formatDate(new Date().toISOString()),          },
+            date: formatDate(new Date().toISOString()),
+          },
         ]);
         setCommentBody("");
       } else {
@@ -101,7 +106,14 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
     }
   };
 
-  
+  const handleDeleteComment = async (commentId: number) => {
+    try {
+      await deleteComment(commentId);
+      setComments((prev) => prev.filter((comment) => comment.commentId !== commentId));
+    } catch (error) {
+      alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   const confirmDeletePost = async () => {
     try {
@@ -133,7 +145,7 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
             />
           </svg>
         </button>
-        {isAuthor && ( 
+        {isAuthor && (
           <button
             onClick={() => setIsPostModalOpen(true)}
             className="text-[#FF3E3E] font-pretendard font-semibold text-[15px] leading-[20px]"
@@ -196,7 +208,7 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
           </div>
         )}
 
-        {comments.length > 0 && (
+{comments.length > 0 && (
           <div className="flex flex-col gap-5">
             {comments.map((comment) => (
               <div
@@ -208,6 +220,35 @@ const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments 
                   <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
                     {comment.nickname}
                   </span>
+                  {comment.nickname === currentUserNickname && (
+                    <button
+                      onClick={() => handleDeleteComment(comment.commentId)}
+                      className="ml-auto"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        viewBox="0 0 28 28"
+                        fill="none"
+                      >
+                        <path
+                          d="M21 7L7 21"
+                          stroke="#FF3E3E"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M7 7L21 21"
+                          stroke="#FF3E3E"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  )}
                 </div>
                 <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mt-[8px]">
                   {comment.content}
