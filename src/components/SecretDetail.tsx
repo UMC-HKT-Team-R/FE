@@ -25,13 +25,26 @@ const SecretDetail: React.FC<SecretDetailProps> = ({ title, date, body, image, o
           <img
             src={image}
             alt={title}
-            className="w-full h-[320px] object-cover" // 둥글기 제거
+            className="w-full h-[252px] object-cover" // 둥글기 제거
             style={{ borderRadius: '0 !important', overflow: 'visible !important'}} // 둥글기를 완전히 없애기 위해 추가
           />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
-            <p className="text-xl text-white mb-1 text-right p-3">{date}</p>
-            <h2 className="text-[35px] font-hsBombaram text-white">{title}</h2>
-          </div>
+<div
+  className="absolute bottom-0 left-0 w-full p-4 f-full"
+  style={{
+    background: "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%)", 
+  }}
+>
+  <p className="text-lg text-white mb-1 text-right p-3">{date}</p>
+  <h2 className="text-[26px] font-hsBombaram text-white">
+    {title.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ))}
+  </h2>
+</div>
+
         </div>
         <div className="p-4">
           <p className="text-md text-gray-700 whitespace-pre-line">{body}</p>
