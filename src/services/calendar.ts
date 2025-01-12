@@ -10,7 +10,7 @@ export const createCalendar = async (
 ) => {
   return await api.post(`/api/calendar`, data, {
     params: {
-      category,
+      categoryE: category,
       colorType,
       date,
       detailFood,
@@ -19,4 +19,12 @@ export const createCalendar = async (
       "Content-Type": "multipart/form-data",
     },
   });
+};
+
+export const getCalendarByDate = async (date: string) => {
+  return await api.get(`/api/calendar/daily?date=${date}`);
+};
+
+export const getMontlyCalendar = async (month: number, year: number) => {
+  return await api.get(`/api/calendar/monthly?month=${month}&year=${year}`);
 };
