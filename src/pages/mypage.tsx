@@ -7,6 +7,7 @@ import profile2 from "../assets/profile2.png";
 import profile3 from "../assets/profile3.png";
 import profile4 from "../assets/profile4.png";
 import profile5 from "../assets/profile.png";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(ArcElement, CategoryScale);
 
@@ -57,6 +58,11 @@ function Mypage() {
     categories: number;
   } | null>(null);
 
+  const navigate = useNavigate();
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+
   const fetchMypageData = async () => {
     try {
       const [mypageResponse, snackResponse] = await Promise.all([
@@ -105,16 +111,9 @@ function Mypage() {
 
   const { type, image } = getGourmetInfo(categories);
 
-  const data = {
-    labels: ["아시안", "패스트푸드", "아시안"],
-    datasets: [
-      {
-        data: [5, 3, categories],
-        backgroundColor: ["#FF6347", "#FFCD00", "#4CAF50", "#404252", "#EAF0FF"],
-        borderColor: "#fff",
-        borderWidth: 2,
-      },
-    ],
+  const handleClick = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/login");
   };
 
   return (
