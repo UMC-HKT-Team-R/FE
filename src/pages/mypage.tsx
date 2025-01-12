@@ -8,6 +8,7 @@ import profile3 from "../assets/profile3.png";
 import profile4 from "../assets/profile4.png";
 import profile5 from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
+import Guest from "./guest";
 
 ChartJS.register(ArcElement, CategoryScale);
 
@@ -101,9 +102,7 @@ function Mypage() {
 
   if (!mypageData) {
     return (
-      <main className="flex justify-center items-center h-screen">
-        <p>로딩 중...</p>
-      </main>
+      <Guest />
     );
   }
 
