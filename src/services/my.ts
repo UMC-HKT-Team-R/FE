@@ -16,3 +16,4 @@ export const getMypageData = async (): Promise<MypageResponse> => {
   const response = await api.get<MypageResponse>("/mypage");
   return response.data;
 };
+

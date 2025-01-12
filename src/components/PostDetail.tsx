@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import logo from "../assets/profile.png";
 import { getPostDetail, deletePost } from "@/services/post";
 import { createComment } from "@/services/comment";
+import { getMypageData, MypageResponse } from "@/services/my";
 
 function PostDetail() {
   const navigate = useNavigate();
@@ -23,14 +24,16 @@ function PostDetail() {
   >([]);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [commentBody, setCommentBody] = useState<string>("");
+  const [isAuthor, setIsAuthor] = useState<boolean>(false); 
 
   useEffect(() => {
     const fetchPostDetail = async () => {
       try {
         if (!postId) return;
         const response = await getPostDetail(Number(postId));
-        const { nickname, date, title, body, imageUrl, comments } = response.result;
-    
+const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments } =
+          response.result;
+
         setDate(formatDate(date)); 
         setNickname(nickname);
         setTitle(title);
@@ -42,6 +45,11 @@ function PostDetail() {
           date: formatDate(comment.date), 
         }));
         setComments(formattedComments);
+        const mypageResponse: MypageResponse = await getMypageData();
+        if (mypageResponse.isSuccess) {
+          const currentMemberId = mypageResponse.result.memberId;
+          setIsAuthor(postMemberId === currentMemberId); // 작성자인지 여부 확인
+        }
       } catch (error) {
         console.error("게시글 상세 정보 가져오기 실패:", error);
         alert("게시글 정보를 불러오는 데 실패했습니다.");
@@ -123,12 +131,14 @@ function PostDetail() {
             />
           </svg>
         </button>
-        <button
-          onClick={() => setIsPostModalOpen(true)}
-          className="text-[#FF3E3E] font-pretendard font-semibold text-[15px] leading-[20px]"
-        >
-          삭제
-        </button>
+        {isAuthor && ( 
+          <button
+            onClick={() => setIsPostModalOpen(true)}
+            className="text-[#FF3E3E] font-pretendard font-semibold text-[15px] leading-[20px]"
+          >
+            삭제
+          </button>
+        )}
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 pb-[80px] relative">

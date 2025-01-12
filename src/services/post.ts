@@ -40,11 +40,13 @@ export interface GetPostDetailResponse {
     title: string;
     date: string;
     body: string;
+    memberId: number;
     imageUrl?: string;
     comments: Array<{
       commentId: number;
       nickname: string;
       content: string;
+      memberId: number;
       date: string;
     }>;
   };
