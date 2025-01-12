@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import logo from "../assets/profile.png";
 import { getPostDetail, deletePost } from "@/services/post";
 import { createComment } from "@/services/comment";
+import { getMypageData, MypageResponse } from "@/services/my";
 
 function PostDetail() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 
   const [nickname, setNickname] = useState<string>("");
+  const [date, setDate] = useState("");
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
@@ -22,28 +24,54 @@ function PostDetail() {
   >([]);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [commentBody, setCommentBody] = useState<string>("");
+  const [isAuthor, setIsAuthor] = useState<boolean>(false); 
 
   useEffect(() => {
     const fetchPostDetail = async () => {
       try {
         if (!postId) return;
         const response = await getPostDetail(Number(postId));
-        const { nickname, title, body, imageUrl, comments } = response.result;
+const { memberId: postMemberId, nickname, date, title, body, imageUrl, comments } =
+          response.result;
 
+        setDate(formatDate(date)); 
         setNickname(nickname);
         setTitle(title);
         setBody(body);
         setImageUrl(imageUrl);
-        setComments(comments);
+    
+        const formattedComments = comments.map((comment) => ({
+          ...comment,
+          date: formatDate(comment.date), 
+        }));
+        setComments(formattedComments);
+        const mypageResponse: MypageResponse = await getMypageData();
+        if (mypageResponse.isSuccess) {
+          const currentMemberId = mypageResponse.result.memberId;
+          setIsAuthor(postMemberId === currentMemberId); // 작성자인지 여부 확인
+        }
       } catch (error) {
         console.error("게시글 상세 정보 가져오기 실패:", error);
         alert("게시글 정보를 불러오는 데 실패했습니다.");
         navigate(-1);
       }
     };
+    
 
     fetchPostDetail();
   }, [postId, navigate]);
+
+  const formatDate = (isoString: string): string => {
+    const dateObj = new Date(isoString);
+    const year = dateObj.getFullYear().toString().slice(2); // 두 자리 연도
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // 2자리 월
+    const day = String(dateObj.getDate()).padStart(2, "0"); // 2자리 일
+    const hours = String(dateObj.getHours()).padStart(2, "0"); // 2자리 시
+    const minutes = String(dateObj.getMinutes()).padStart(2, "0"); // 2자리 분
+    return `${year}. ${month}. ${day}. ${hours}:${minutes}`;
+  };
+
+  
 
   const handleCommentSubmit = async () => {
     if (!commentBody.trim()) {
@@ -60,8 +88,7 @@ function PostDetail() {
             commentId: response.result.commentId,
             nickname,
             content: commentBody,
-            date: new Date().toLocaleString("ko-KR", { dateStyle: "short", timeStyle: "short" }),
-          },
+            date: formatDate(new Date().toISOString()),          },
         ]);
         setCommentBody("");
       } else {
@@ -71,6 +98,8 @@ function PostDetail() {
       alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
     }
   };
+
+  
 
   const confirmDeletePost = async () => {
     try {
@@ -102,12 +131,14 @@ function PostDetail() {
             />
           </svg>
         </button>
-        <button
-          onClick={() => setIsPostModalOpen(true)}
-          className="text-[#FF3E3E] font-pretendard font-semibold text-[15px] leading-[20px]"
-        >
-          삭제
-        </button>
+        {isAuthor && ( 
+          <button
+            onClick={() => setIsPostModalOpen(true)}
+            className="text-[#FF3E3E] font-pretendard font-semibold text-[15px] leading-[20px]"
+          >
+            삭제
+          </button>
+        )}
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 pb-[80px] relative">
@@ -117,6 +148,9 @@ function PostDetail() {
             <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">
               {nickname}
             </span>
+            <div className="text-[#B3B5BC] font-pretendard text-[12px] leading-[16px] mt-[3px]">
+              {date}
+            </div>
           </div>
         </div>
 
@@ -124,9 +158,7 @@ function PostDetail() {
           {title}
         </h1>
 
-        <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mb-[12px]">
-          {body}
-        </p>
+        <p className="text-[#000] font-pretendard text-[15px] leading-[20px] mb-[12px]">{body}</p>
 
         {imageUrl && (
           <img
@@ -165,7 +197,10 @@ function PostDetail() {
         {comments.length > 0 && (
           <div className="flex flex-col gap-5">
             {comments.map((comment) => (
-              <div key={comment.commentId} className="flex flex-col gap-2 border-b border-grey100 pb-5">
+              <div
+                key={comment.commentId}
+                className="flex flex-col gap-2 border-b border-grey100 pb-5"
+              >
                 <div className="flex gap-2 items-center">
                   <img src={logo} alt="프로필" className="w-10 h-10 rounded-full" />
                   <span className="text-[#000] font-pretendard font-medium text-[15px] leading-[20px]">

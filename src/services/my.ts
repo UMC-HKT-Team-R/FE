@@ -17,6 +17,3 @@ export const getMypageData = async (): Promise<MypageResponse> => {
   return response.data;
 };
 
-export const getMonthlySnackData = async () => {
-  return await api.get("/api/calendar/count");
-};

@@ -6,6 +6,7 @@ import banner3 from "../assets/banner3.png";
 import FloatingWriteButton from "@/components/FloatingWriteButton";
 import { getPosts } from "@/services/post";
 
+
 function Post() {
   const navigate = useNavigate();
 
