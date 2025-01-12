@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import InfoGrid from "../components/InfoGrid";
 import WhiteRankingList from "../components/WhiteRankingList";
@@ -8,6 +7,8 @@ import R4 from "../assets/Rectangle 4.svg";
 import R5 from "../assets/Rectangle 5.svg";
 import R6 from "../assets/Rectangle 6.svg";
 import R7 from "../assets/Rectangle 7.svg";
+import { api } from "@/services/api";
+import kakao from "@/assets/Kakao.svg";
 
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -181,12 +182,12 @@ function Home() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch("/api/user");
-        if (response.ok) {
-          const data = await response.json();
+        const response = await api.get("/mypage");
+        if (response.status === 200) {
           setIsLoggedIn(true);
-          setNickname(data.nickname);
-          setRatio(data.ratio);
+          setNickname(response.data.nickname);
+          setRatio(response.data.categories);
+          localStorage.setItem("memberId", response.data.memberId);
         } else {
           setIsLoggedIn(false);
         }
@@ -241,11 +242,7 @@ function Home() {
                     className="bg-yellow1 font-pretendard text-black w-full px-4 py-3 my-2 rounded-md flex items-center justify-center text-md"
                     onClick={() => (window.location.href = "/login")}
                   >
-                    <img
-                      src="/src/assets/Kakao.svg"
-                      alt="카카오"
-                      className="w-5 h-5 mr-2"
-                    />
+                    <img src={kakao} alt="카카오" className="w-5 h-5 mr-2" />
                     카카오로 로그인하기
                   </button>
                 </div>
@@ -260,7 +257,7 @@ function Home() {
               <BlackRankingList />
             </section>
 
-            <section >
+            <section>
               <h2 className="text-[28px] font-hsBombaram mb-0 pt-7">흑백 야식가를 위한</h2>
               <h2 className="text-[28px] font-hsBombaram mb-4">시크릿 야식 정보!</h2>
               <InfoGrid onPostClick={handlePostClick} />
